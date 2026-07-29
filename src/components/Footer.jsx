@@ -14,12 +14,14 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
         {/* Links Rápidos */}
         <div className="flex flex-wrap justify-center gap-6 text-sm font-semibold text-[#51443b]">
           <button
+            type="button"
             onClick={onNavigateHome}
             className="hover:text-[#81542b] transition-colors cursor-pointer"
           >
             Inicio
           </button>
           <button
+            type="button"
             onClick={onNavigateMenu}
             className="hover:text-[#81542b] transition-colors cursor-pointer"
           >

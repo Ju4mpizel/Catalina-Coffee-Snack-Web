@@ -16,9 +16,10 @@ export default function BrandLogo({
     }[size] || "h-14 sm:h-16";
 
   return (
-    <div
+    <button
+      type="button"
       onClick={onClick}
-      className="flex items-center cursor-pointer group select-none py-1"
+      className="flex items-center cursor-pointer group select-none py-1 bg-transparent border-none p-0"
     >
       {!imgError ? (
         <img
@@ -33,6 +34,6 @@ export default function BrandLogo({
           Catalina
         </span>
       )}
-    </div>
+    </button>
   );
 }

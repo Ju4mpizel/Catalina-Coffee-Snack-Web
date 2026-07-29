@@ -1,5 +1,14 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { Tag } from "lucide-react";
+
+const categories = [
+  "Ofertas Catalina",
+  "Todos",
+  "Cafés",
+  "Repostería",
+  "Snacks",
+  "Bebidas",
+];
 
 export default function MenuCatalog({
   items,
@@ -7,16 +16,6 @@ export default function MenuCatalog({
   onSelectCategory,
   highlightedItemId,
 }) {
-  // Lista oficial de categorías
-  const categories = [
-    "Ofertas Catalina",
-    "Todos",
-    "Cafés",
-    "Repostería",
-    "Snacks",
-    "Bebidas",
-  ];
-
   // Filtrado de elementos dinámico y seguro
   const filteredItems =
     selectedCategory === "Todos"
@@ -47,8 +46,9 @@ export default function MenuCatalog({
             return (
               <button
                 key={cat}
+                type="button"
                 onClick={() => onSelectCategory(cat)}
-                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 cursor-pointer flex items-center gap-2 ${
+                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer flex items-center gap-2 ${
                   isOfferCategory
                     ? isSelected
                       ? "bg-[#81542b] text-white shadow-md ring-2 ring-[#81542b]/40"
@@ -68,7 +68,7 @@ export default function MenuCatalog({
 
       {/* Grid de Productos con Transición Acelerada */}
       <AnimatePresence mode="wait">
-        <motion.div
+        <m.div
           key={selectedCategory}
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -134,7 +134,7 @@ export default function MenuCatalog({
               </div>
             </div>
           ))}
-        </motion.div>
+        </m.div>
       </AnimatePresence>
     </section>
   );

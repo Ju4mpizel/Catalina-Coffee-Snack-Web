@@ -47,6 +47,7 @@ export default function LocationSection() {
             className="w-full h-full border-0"
             allowFullScreen=""
             loading="lazy"
+            sandbox="allow-scripts allow-same-origin allow-popups"
           />
         </div>
       </div>

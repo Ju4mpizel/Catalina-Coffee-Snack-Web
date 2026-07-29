@@ -1,159 +1,191 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Tag,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  ArrowRight,
-} from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { m, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
+
+const WHATSAPP_BASE =
+  "https://wa.me/59170000000?text=Hola%20Catalina%20Coffee%2C%20quiero%20la%20oferta%3A";
 
 export default function OffersCarousel({ ofertas, onGoToOffersMenu }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  // Guardamos la dirección de la animación: 1 para adelante, -1 para atrás
   const [direction, setDirection] = useState(1);
+  const [isPaused, setIsPaused] = useState(false);
+  const touchStartX = useRef(null);
+  const touchStartY = useRef(null);
 
-  const prevSlide = () => {
-    setDirection(-1);
-    setCurrentIndex((prev) => (prev === 0 ? ofertas.length - 1 : prev - 1));
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    setIsPaused(true);
   };
 
-  const nextSlide = () => {
-    setDirection(1);
-    setCurrentIndex((prev) => (prev === ofertas.length - 1 ? 0 : prev + 1));
+  const handleTouchEnd = (e) => {
+    setIsPaused(false);
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      if (dx > 0) prev();
+      else next();
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
   };
-
-  // Autoplay pausado a 8 segundos
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev === ofertas.length - 1 ? 0 : prev + 1));
-    }, 8000);
-    return () => clearInterval(timer);
-  }, [ofertas.length]);
 
   if (!ofertas || ofertas.length === 0) return null;
 
+  const total = ofertas.length;
   const current = ofertas[currentIndex];
 
-  // Variantes de animación fluida para Framer Motion
-  const slideVariants = {
-    enter: (dir) => ({
-      x: dir > 0 ? 30 : -30,
-      opacity: 0,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-    },
-    exit: (dir) => ({
-      x: dir > 0 ? -30 : 30,
-      opacity: 0,
-    }),
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setDirection(1);
+      setCurrentIndex((prev) => (prev + 1) % total);
+    }, 10000);
+    return () => clearInterval(timer);
+  }, [total, isPaused]);
+
+  const prev = () => {
+    setDirection(-1);
+    setCurrentIndex((prev) => (prev === 0 ? total - 1 : prev - 1));
   };
 
-  return (
-    <section className="py-16 bg-[#f1ede6] border-y border-[#d5c3b7]/40 relative overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6">
-        {/* Header de la Sección */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fdf9f2] text-[#81542b] text-xs font-semibold tracking-wide uppercase mb-3 border border-[#d5c3b7]/50">
-              <Tag className="w-3.5 h-3.5 text-[#81542b]" />
-              <span>Promociones Especiales</span>
-            </div>
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#1c1c18]">
-              Ofertas Catalina
-            </h2>
-          </div>
+  const next = () => {
+    setDirection(1);
+    setCurrentIndex((prev) => (prev + 1) % total);
+  };
 
-          {/* Controles de Navegación Manual */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={prevSlide}
-              className="w-10 h-10 rounded-full bg-white border border-[#d5c3b7]/60 flex items-center justify-center text-[#1c1c18] hover:bg-[#81542b] hover:text-white transition-colors shadow-xs cursor-pointer active:scale-95"
-              aria-label="Anterior"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <span className="text-xs font-semibold text-[#7c5730] px-2">
-              {currentIndex + 1} / {ofertas.length}
-            </span>
-            <button
-              onClick={nextSlide}
-              className="w-10 h-10 rounded-full bg-white border border-[#d5c3b7]/60 flex items-center justify-center text-[#1c1c18] hover:bg-[#81542b] hover:text-white transition-colors shadow-xs cursor-pointer active:scale-95"
-              aria-label="Siguiente"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+  const goTo = (index) => {
+    setDirection(index > currentIndex ? 1 : -1);
+    setCurrentIndex(index);
+  };
+
+  const whatsappUrl = (titulo) =>
+    `${WHATSAPP_BASE}%20${encodeURIComponent(titulo)}`;
+
+  return (
+    <section
+      id="ofertas"
+      className="py-12 sm:py-16 bg-[#f1ede6] scroll-mt-24"
+    >
+      <div className="max-w-6xl mx-auto px-6">
+        {/* Header */}
+        <div className="mb-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fdf9f2] text-[#81542b] text-xs font-semibold tracking-wide uppercase border border-[#d5c3b7]/50">
+            <span>Promociones Especiales</span>
           </div>
+          <h2 className="font-serif text-3xl sm:text-4xl text-[#1c1c18] font-normal mt-2">
+            Ofertas Catalina
+          </h2>
         </div>
 
-        {/* Contenedor Animado de la Tarjeta */}
-        <div className="relative min-h-[420px] md:min-h-[380px]">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={current.id}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                duration: 0.45,
-                ease: [0.25, 0.1, 0.25, 1], // Curva de aceleración natural
-              }}
-              className="bg-white rounded-3xl overflow-hidden border border-[#d5c3b7]/50 shadow-md grid grid-cols-1 md:grid-cols-12 items-center w-full"
-            >
-              {/* Imagen de la Oferta */}
-              <div className="md:col-span-6 h-64 md:h-96 relative overflow-hidden">
-                <img
-                  src={current.imagen}
-                  alt={current.titulo}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-4 left-4 bg-[#81542b] text-white text-xs font-bold px-3.5 py-1.5 rounded-full shadow-md uppercase tracking-wider">
-                  {current.descuento}
-                </div>
-              </div>
-
-              {/* Contenido de la Oferta */}
-              <div className="md:col-span-6 p-8 md:p-12 flex flex-col justify-between h-full">
-                <div>
-                  <div className="flex items-center gap-2 text-xs font-semibold text-[#7c5730] mb-3">
-                    <Clock className="w-4 h-4 text-[#81542b]" />
-                    <span>{current.valido}</span>
+        {/* Slide */}
+        <div className="relative">
+          <div
+            className="overflow-hidden rounded-3xl"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            <AnimatePresence mode="wait" custom={direction}>
+              <m.div
+                key={current.id}
+                custom={direction}
+                variants={{
+                  enter: (dir) => ({ x: dir > 0 ? 60 : -60, opacity: 0 }),
+                  center: { x: 0, opacity: 1 },
+                  exit: (dir) => ({ x: dir > 0 ? -60 : 60, opacity: 0 }),
+                }}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                className="bg-white border border-[#d5c3b7]/40 shadow-md overflow-hidden md:grid md:grid-cols-12"
+              >
+                <div className="md:col-span-6 h-64 md:h-96 relative overflow-hidden bg-[#fdf9f2]">
+                  <img
+                    src={current.imagen}
+                    alt={current.titulo}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-4 left-4 bg-[#81542b] text-white text-xs font-bold px-3.5 py-1.5 rounded-full shadow-sm uppercase tracking-wider">
+                    {current.descuento}
                   </div>
-
-                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#1c1c18] mb-4">
-                    {current.titulo}
-                  </h3>
-
-                  <p className="font-sans text-sm sm:text-base text-[#51443b] leading-relaxed mb-6">
-                    {current.descripcion}
-                  </p>
                 </div>
 
-                <div className="pt-6 border-t border-[#f1ede6] flex items-center justify-between gap-4">
+                <div className="md:col-span-6 p-8 md:p-12 flex flex-col justify-between">
                   <div>
-                    <span className="text-xs text-[#51443b] line-through block">
-                      Antes: Bs. {current.precioAntes}
-                    </span>
-                    <span className="font-serif text-2xl font-bold text-[#81542b]">
-                      Bs. {current.precioOferta}
-                    </span>
+                    <div className="text-xs font-medium text-[#7c5730] mb-3">
+                      {current.valido}
+                    </div>
+                    <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#1c1c18] mb-4 leading-tight">
+                      {current.titulo}
+                    </h3>
+                    <p className="font-sans text-sm sm:text-base text-[#51443b] leading-relaxed mb-6">
+                      {current.descripcion}
+                    </p>
                   </div>
 
-                  <button
-                    onClick={onGoToOffersMenu}
-                    className="flex items-center gap-2 bg-[#81542b] hover:bg-[#6b4321] text-white text-sm font-semibold px-6 py-3 rounded-full transition-all shadow-xs hover:shadow-md cursor-pointer active:scale-95"
-                  >
-                    <span>Ver en Menú</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
+                  <div className="pt-6 border-t border-[#f1ede6]">
+                    <div className="flex items-baseline gap-3 mb-6">
+                      <span className="text-sm text-[#51443b] line-through">
+                        Bs. {current.precioAntes}
+                      </span>
+                      <span className="font-serif text-2xl font-bold text-[#81542b]">
+                        Bs. {current.precioOferta}
+                      </span>
+                    </div>
+                    <a
+                      href={whatsappUrl(current.titulo)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-[#81542b] text-[#81542b] hover:bg-[#81542b] hover:text-white text-sm font-semibold px-6 py-3 rounded-full transition-all active:scale-95"
+                    >
+                      <MessageCircle className="w-4 h-4 fill-current" />
+                      <span>Pedir por WhatsApp</span>
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+              </m.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Arrows */}
+          <button
+            type="button"
+            onClick={prev}
+            className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 border border-[#d5c3b7]/50 items-center justify-center text-[#51443b] hover:bg-[#81542b] hover:text-white transition-colors shadow-xs cursor-pointer active:scale-95 backdrop-blur-none"
+            aria-label="Anterior"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            type="button"
+            onClick={next}
+            className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 border border-[#d5c3b7]/50 items-center justify-center text-[#51443b] hover:bg-[#81542b] hover:text-white transition-colors shadow-xs cursor-pointer active:scale-95 backdrop-blur-none"
+            aria-label="Siguiente"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+          {/* Dots */}
+          <div className="flex items-center justify-center gap-2 mt-6">
+            {ofertas.map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => goTo(index)}
+                className={`rounded-full transition-all cursor-pointer ${
+                  index === currentIndex
+                    ? "bg-[#81542b] w-6 h-2.5"
+                    : "bg-[#d5c3b7] hover:bg-[#81542b]/50 w-2.5 h-2.5"
+                }`}
+                aria-label={`Ir a oferta ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

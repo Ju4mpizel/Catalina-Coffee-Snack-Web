@@ -1,0 +1,40 @@
+import { Coffee, Wheat, Leaf, Cookie, Timer } from "lucide-react";
+
+const attributes = [
+  { icon: Coffee, text: "Café de Origen Bolivia" },
+  { icon: Wheat, text: "Repostería Horneada Hoy" },
+  { icon: Leaf, text: "Granos 100% Orgánicos" },
+  { icon: Cookie, text: "Opciones Sin Gluten" },
+  { icon: Timer, text: "Métodos V60 & AeroPress" },
+];
+
+export default function MarqueeBanner() {
+  // Triplicamos o cuadruplicamos la lista para garantizar cobertura en pantallas anchas (4K / Monitores grandes)
+  const marqueeItems = [
+    ...attributes,
+    ...attributes,
+    ...attributes,
+    ...attributes,
+  ];
+
+  return (
+    <div className="relative overflow-hidden py-4 bg-[#f1ede6]/40 border-y border-[#d5c3b7]/30 select-none">
+      {/* Sombra difuminada a la izquierda y derecha */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-24 z-10 bg-gradient-to-r from-[#fdf9f2] to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-24 z-10 bg-gradient-to-l from-[#fdf9f2] to-transparent" />
+
+      {/* Ticker continuo en CSS */}
+      <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+        {marqueeItems.map((item, i) => (
+          <span
+            key={item.text + i}
+            className="inline-flex items-center gap-2 mx-6 sm:mx-8 text-sm font-semibold text-[#51443b]"
+          >
+            <item.icon className="w-4 h-4 text-[#81542b] shrink-0" />
+            <span className="whitespace-nowrap">{item.text}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}

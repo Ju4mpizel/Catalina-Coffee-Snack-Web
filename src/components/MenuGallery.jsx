@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Sparkles, ArrowUpRight, Heart } from "lucide-react";
 
 export default function MenuGallery({ items, onItemClick }) {
@@ -22,7 +22,7 @@ export default function MenuGallery({ items, onItemClick }) {
           : "h-80";
 
     return (
-      <motion.div
+      <m.div
         key={item.id}
         initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -30,7 +30,10 @@ export default function MenuGallery({ items, onItemClick }) {
         transition={{ duration: 0.3 }}
         whileHover={{ y: -6 }}
         onClick={() => onItemClick(item)}
-        className="relative group cursor-pointer overflow-hidden rounded-3xl bg-[#f1ede6] border border-[#d5c3b7]/40 shadow-xs hover:shadow-2xl transition-all duration-300"
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onItemClick(item); } }}
+        role="button"
+        tabIndex={0}
+        className="relative group cursor-pointer overflow-hidden rounded-3xl bg-[#f1ede6] border border-[#d5c3b7]/40 shadow-xs hover:shadow-2xl transition-shadow duration-300"
       >
         {/* Contenedor de Imagen de Altura Asimétrica */}
         <div className={`w-full ${heightClass} relative overflow-hidden`}>
@@ -73,7 +76,7 @@ export default function MenuGallery({ items, onItemClick }) {
             </div>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     );
   };
 

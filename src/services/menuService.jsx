@@ -4,7 +4,7 @@ import { mockMenu, mockOfertas } from "../data/mockMenu";
 const SHEET_ID = "1wEBjZCbdi3tY_sS3p4a17GjqM0Sg6R2OzAnFY8UuWTI";
 
 const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
-const CACHE_KEY = "catalina_menu_cache";
+const CACHE_KEY = "catalina_menu_cache:v1";
 const CACHE_TTL = 1 * 60 * 1000; // Reducido a 1 MINUTO para cambios casi inmediatos
 
 export async function fetchMenuData() {
@@ -32,6 +32,7 @@ export async function fetchMenuData() {
   // 3. Consultar a Google Sheets (Si pasó más de 1 minuto o no hay caché)
   try {
     const response = await fetch(GVIZ_URL);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const text = await response.text();
 
     // Limpiar respuesta JSON de Google Visualization API
@@ -59,21 +60,21 @@ export async function fetchMenuData() {
       };
     });
 
-    const parsedOfertas = parsedMenu
-      .filter(
-        (item) =>
-          item.esOferta || item.categoria.toLowerCase() === "ofertas catalina",
-      )
-      .map((item) => ({
-        id: item.id,
-        titulo: item.nombre,
-        descuento: "Oferta",
-        descripcion: item.descripcion,
-        precioAntes: item.precioAntes || item.precio + 10,
-        precioOferta: item.precio,
-        imagen: item.imagen,
-        valido: "Disponible Hoy",
-      }));
+    const parsedOfertas = parsedMenu.reduce((acc, item) => {
+      if (item.esOferta || item.categoria.toLowerCase() === "ofertas catalina") {
+        acc.push({
+          id: item.id,
+          titulo: item.nombre,
+          descuento: "Oferta",
+          descripcion: item.descripcion,
+          precioAntes: item.precioAntes || item.precio + 10,
+          precioOferta: item.precio,
+          imagen: item.imagen,
+          valido: "Disponible Hoy",
+        });
+      }
+      return acc;
+    }, []);
 
     const result = {
       menu: parsedMenu,

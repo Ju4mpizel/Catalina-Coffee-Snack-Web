@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import MarqueeBanner from "./components/MarqueeBanner";
 import OffersCarousel from "./components/OffersCarousel";
 import AboutSection from "./components/AboutSection";
+import ProcessTimeline from "./components/ProcessTimeline";
+import Testimonials from "./components/Testimonials";
+import InstagramSection from "./components/InstagramSection";
 import LocationSection from "./components/LocationSection";
 import MenuGallery from "./components/MenuGallery";
+import InfoBanner from "./components/InfoBanner";
 import MenuCatalog from "./components/MenuCatalog";
 import Footer from "./components/Footer";
 import { fetchMenuData } from "./services/menuService";
@@ -15,7 +20,6 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState("Ofertas Catalina");
   const [highlightedItemId, setHighlightedItemId] = useState(null);
 
-  // Estados para datos dinámicos desde Google Sheets
   const [menuItems, setMenuItems] = useState([]);
   const [ofertasItems, setOfertasItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -58,7 +62,7 @@ export default function App() {
           <Coffee className="w-6 h-6" />
         </div>
         <p className="font-serif text-lg text-[#1c1c18]">
-          Cargando menú de Catalina...
+          Cargando men&uacute; de Catalina...
         </p>
       </div>
     );
@@ -77,11 +81,18 @@ export default function App() {
           {currentView === "inicio" ? (
             <>
               <Hero onExploreMenu={() => setCurrentView("menu")} />
+              <MarqueeBanner />
               <OffersCarousel
                 ofertas={ofertasItems}
                 onGoToOffersMenu={handleGoToOffersMenu}
               />
               <AboutSection />
+              <ProcessTimeline />
+              <div className="divider-warm max-w-6xl mx-auto px-6 my-2" />
+              <Testimonials />
+              <div className="divider-warm max-w-6xl mx-auto px-6 my-2" />
+              <InstagramSection />
+              <div className="divider-warm max-w-6xl mx-auto px-6 my-2" />
               <LocationSection />
             </>
           ) : (
@@ -90,6 +101,7 @@ export default function App() {
                 items={menuItems}
                 onItemClick={handleItemClickFromGallery}
               />
+              <InfoBanner />
               <MenuCatalog
                 items={menuItems}
                 selectedCategory={selectedCategory}
