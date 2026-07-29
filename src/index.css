@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Libre Caslon Text", serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+
+  /* Paleta "Artisanal Warmth" extraída de tu Google Stitch */
+  --color-surface-cream: #fdf9f2;
+  --color-surface-dim: #dddad3;
+  --color-surface-container: #f1ede6;
+  --color-surface-high: #ece8e1;
+  --color-deep-roast: #1c1c18;
+  --color-on-surface-variant: #51443b;
+  --color-primary-caramel: #81542b;
+  --color-primary-container: #c18c5d;
+  --color-secondary-bronze: #7c5730;
+  --color-outline-soft: #d5c3b7;
+}
+
+body {
+  background-color: var(--color-surface-cream);
+  color: var(--color-deep-roast);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-serif {
+  font-family: var(--font-serif);
+}
