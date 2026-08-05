@@ -1,16 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
+import { getWhatsappUrl } from "../config/site";
 
-const WHATSAPP_BASE =
-  "https://wa.me/59170000000?text=Hola%20Catalina%20Coffee%2C%20quiero%20la%20oferta%3A";
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800";
 
-export default function OffersCarousel({ ofertas, onGoToOffersMenu }) {
+export default function OffersCarousel({ ofertas }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef(null);
   const touchStartY = useRef(null);
+
+  const total = ofertas?.length || 0;
 
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
@@ -30,19 +33,19 @@ export default function OffersCarousel({ ofertas, onGoToOffersMenu }) {
     touchStartY.current = null;
   };
 
-  if (!ofertas || ofertas.length === 0) return null;
-
-  const total = ofertas.length;
-  const current = ofertas[currentIndex];
-
+  // Autoplay: los hooks se ejecutan SIEMPRE en el mismo orden (antes del early return)
   useEffect(() => {
-    if (isPaused) return;
+    if (total === 0 || isPaused) return undefined;
     const timer = setInterval(() => {
       setDirection(1);
       setCurrentIndex((prev) => (prev + 1) % total);
     }, 10000);
     return () => clearInterval(timer);
   }, [total, isPaused]);
+
+  if (!ofertas || total === 0) return null;
+
+  const current = ofertas[currentIndex % total];
 
   const prev = () => {
     setDirection(-1);
@@ -60,15 +63,20 @@ export default function OffersCarousel({ ofertas, onGoToOffersMenu }) {
   };
 
   const whatsappUrl = (titulo) =>
-    `${WHATSAPP_BASE}%20${encodeURIComponent(titulo)}`;
+    getWhatsappUrl(`Hola Catalina Coffee, quiero la oferta: ${titulo}`);
+
+  const handleImageError = (e) => {
+    e.target.onerror = null;
+    e.target.src = FALLBACK_IMAGE;
+  };
 
   return (
     <section
       id="ofertas"
+      data-reveal
       className="py-12 sm:py-16 bg-[#f1ede6] scroll-mt-24"
     >
       <div className="max-w-6xl mx-auto px-6">
-        {/* Header */}
         <div className="mb-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fdf9f2] text-[#81542b] text-xs font-semibold tracking-wide uppercase border border-[#d5c3b7]/50">
             <span>Promociones Especiales</span>
@@ -78,7 +86,6 @@ export default function OffersCarousel({ ofertas, onGoToOffersMenu }) {
           </h2>
         </div>
 
-        {/* Slide */}
         <div className="relative">
           <div
             className="overflow-hidden rounded-3xl"
@@ -106,6 +113,7 @@ export default function OffersCarousel({ ofertas, onGoToOffersMenu }) {
                   <img
                     src={current.imagen}
                     alt={current.titulo}
+                    onError={handleImageError}
                     loading="lazy"
                     decoding="async"
                     className="w-full h-full object-cover"
@@ -141,7 +149,7 @@ export default function OffersCarousel({ ofertas, onGoToOffersMenu }) {
                       href={whatsappUrl(current.titulo)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-[#81542b] text-[#81542b] hover:bg-[#81542b] hover:text-white text-sm font-semibold px-6 py-3 rounded-full transition-all active:scale-95"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-[#81542b] text-[#81542b] hover:bg-[#81542b] hover:text-white text-sm font-semibold px-6 py-3 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
                     >
                       <MessageCircle className="w-4 h-4 fill-current" />
                       <span>Pedir por WhatsApp</span>
@@ -152,7 +160,6 @@ export default function OffersCarousel({ ofertas, onGoToOffersMenu }) {
             </AnimatePresence>
           </div>
 
-          {/* Arrows */}
           <button
             type="button"
             onClick={prev}
@@ -170,7 +177,6 @@ export default function OffersCarousel({ ofertas, onGoToOffersMenu }) {
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          {/* Dots */}
           <div className="flex items-center justify-center gap-2 mt-6">
             {ofertas.map((_, index) => (
               <button

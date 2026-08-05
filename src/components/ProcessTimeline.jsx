@@ -1,86 +1,72 @@
-import { m } from "framer-motion";
-import { Leaf, Flame, Coffee } from "lucide-react";
+import { UtensilsCrossed, ChefHat, HeartHandshake } from "lucide-react";
 
 const steps = [
   {
-    icon: Leaf,
-    title: "El Grano",
+    icon: UtensilsCrossed,
+    title: "Eliges tu Antojo",
     description:
-      "Seleccionamos granos 100% bolivianos de cooperativas locales en Los Yungas y Caranavi.",
+      "Explora nuestro menú: desde cafés de origen y bebidas frías hasta repostería horneada y tostados artesanales.",
   },
   {
-    icon: Flame,
-    title: "El Tueste",
+    icon: ChefHat,
+    title: "Lo Preparamos al Momento",
     description:
-      "Tostado artesanal en lotes peque\u00f1os para preservar el perfil de sabor \u00fanico de cada origen.",
+      "Extraemos tu café con precisión y alistamos tus aperitivos o postres al instante para garantizar la máxima frescura.",
   },
   {
-    icon: Coffee,
-    title: "Tu Taza",
+    icon: HeartHandshake,
+    title: "A tu Mesa para Disfrutar",
     description:
-      "Preparamos cada orden con m\u00e9todos de extracci\u00f3n precisos: V60, AeroPress o espresso.",
+      "Te lo llevamos a la mesa con una sonrisa. Un ambiente cálido y cómodo listo para que vivas la experiencia Catalina.",
   },
 ];
-
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.2 } },
-};
-
-const stepVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] },
-  },
-};
 
 export default function ProcessTimeline() {
   return (
     <section
       id="proceso"
-      className="relative py-12 sm:py-16 max-w-6xl mx-auto px-6 overflow-hidden scroll-mt-24"
+      className="w-full bg-[#f1ede6]/80 text-[#1c1c18] py-16 sm:py-20 my-12 border-y border-[#d5c3b7]/40 relative overflow-hidden scroll-mt-24"
     >
-      <div className="text-center mb-14">
-        <span className="text-xs font-semibold uppercase tracking-widest text-[#4a2e16] block mb-2">
-          Nuestro Proceso
-        </span>
-        <h2 className="font-serif text-3xl sm:text-5xl text-[#1c1c18] font-normal">
-          Del Grano a Tu Taza
-        </h2>
-      </div>
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <div data-reveal className="text-center mb-14">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#81542b] block mb-2">
+            La Experiencia Catalina
+          </span>
+          <h2 className="font-serif text-3xl sm:text-5xl text-[#1c1c18] font-normal">
+            Del Menú a Tu Mesa
+          </h2>
+        </div>
 
-      <m.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative"
-      >
-        <div className="hidden md:block absolute top-20 left-[16.66%] right-[16.66%] h-px bg-gradient-to-r from-[#81542b]/30 via-[#c18c5d]/30 to-[#81542b]/30" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 relative">
+          {/* Línea conectora horizontal sutil en escritorio */}
+          <div className="hidden md:block absolute top-10 left-[16.66%] right-[16.66%] h-px bg-gradient-to-r from-transparent via-[#81542b]/30 to-transparent z-0" />
 
-        {steps.map((step, index) => (
-          <m.div
-            key={step.title}
-            variants={stepVariants}
-            className="relative flex flex-col items-center text-center"
-          >
-            <div className="relative z-10 w-16 h-16 rounded-full bg-white border border-[#d5c3b7]/40 shadow-sm flex items-center justify-center mb-6">
-              <step.icon className="w-7 h-7 text-[#81542b]" />
-              <span className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-[#81542b] text-white text-[10px] font-bold flex items-center justify-center shadow-sm">
-                {index + 1}
-              </span>
+          {steps.map((step, index) => (
+            <div
+              key={step.title}
+              data-reveal
+              style={{ transitionDelay: `${index * 120}ms` }}
+              className="relative flex flex-col items-center text-center group"
+            >
+              {/* Círculo del Ícono */}
+              <div className="relative z-10 w-20 h-20 rounded-full bg-[#fdf9f2] border border-[#d5c3b7]/60 shadow-sm flex items-center justify-center mb-6 group-hover:border-[#81542b] group-hover:scale-105 transition-all duration-300">
+                <step.icon className="w-8 h-8 text-[#81542b]" />
+                <span className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-[#81542b] text-[#fdf9f2] text-xs font-bold flex items-center justify-center shadow-sm">
+                  {index + 1}
+                </span>
+              </div>
+
+              {/* Textos */}
+              <h3 className="font-serif text-xl font-bold text-[#1c1c18] mb-3">
+                {step.title}
+              </h3>
+              <p className="font-sans text-sm text-[#51443b] leading-relaxed max-w-xs">
+                {step.description}
+              </p>
             </div>
-            <h3 className="font-serif text-xl font-bold text-[#1c1c18] mb-3">
-              {step.title}
-            </h3>
-            <p className="font-sans text-sm text-[#51443b] leading-relaxed max-w-xs">
-              {step.description}
-            </p>
-          </m.div>
-        ))}
-      </m.div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

@@ -1,14 +1,8 @@
 import { m, AnimatePresence } from "framer-motion";
 import { Tag } from "lucide-react";
 
-const categories = [
-  "Ofertas Catalina",
-  "Todos",
-  "Cafés",
-  "Repostería",
-  "Snacks",
-  "Bebidas",
-];
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800";
 
 export default function MenuCatalog({
   items,
@@ -16,19 +10,46 @@ export default function MenuCatalog({
   onSelectCategory,
   highlightedItemId,
 }) {
-  // Filtrado de elementos dinámico y seguro
+  // 1. Categorías 100% dinámicas extraídas del Google Sheet con guard defensivo
+  const safeItems = items || [];
+
+  const dynamicCategories = Array.from(
+    new Set(safeItems.map((i) => i.categoria?.trim()).filter(Boolean)),
+  );
+
+  // Filtrado case-insensitive para evitar botones duplicados por variaciones de mayúsculas/minúsculas
+  const categories = [
+    "Ofertas Catalina",
+    "Todos",
+    ...dynamicCategories.filter(
+      (cat) =>
+        cat.toLowerCase() !== "ofertas catalina" &&
+        cat.toLowerCase() !== "todos",
+    ),
+  ];
+
+  // Filtrado dinámico de items
   const filteredItems =
     selectedCategory === "Todos"
-      ? items
-      : items.filter(
+      ? safeItems
+      : safeItems.filter(
           (item) =>
             item.categoria &&
             item.categoria.toLowerCase().trim() ===
               selectedCategory.toLowerCase().trim(),
         );
 
+  const handleImageError = (e) => {
+    e.target.onerror = null;
+    e.target.src = FALLBACK_IMAGE;
+  };
+
   return (
-    <section id="catalogo-section" className="py-20 max-w-6xl mx-auto px-6">
+    <section
+      id="catalogo-section"
+      data-reveal
+      className="py-20 max-w-6xl mx-auto px-6"
+    >
       <div className="text-center mb-12">
         <span className="text-xs font-semibold uppercase tracking-widest text-[#7c5730] block mb-2">
           Catálogo Completo
@@ -37,7 +58,7 @@ export default function MenuCatalog({
           Nuestro Menú
         </h2>
 
-        {/* Pestañas de Categorías */}
+        {/* Pestañas de Categorías Dinámicas */}
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           {categories.map((cat) => {
             const isOfferCategory = cat === "Ofertas Catalina";
@@ -48,14 +69,14 @@ export default function MenuCatalog({
                 key={cat}
                 type="button"
                 onClick={() => onSelectCategory(cat)}
-                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-colors duration-200 cursor-pointer flex items-center gap-2 ${
+                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 active:scale-95 cursor-pointer flex items-center gap-2 ${
                   isOfferCategory
                     ? isSelected
                       ? "bg-[#81542b] text-white shadow-md ring-2 ring-[#81542b]/40"
                       : "bg-[#81542b]/15 text-[#81542b] border border-[#81542b]/40 hover:bg-[#81542b]/25"
                     : isSelected
-                      ? "bg-[#81542b] text-white shadow-sm"
-                      : "bg-[#f1ede6] text-[#51443b] hover:bg-[#ece8e1]"
+                    ? "bg-[#81542b] text-white shadow-sm"
+                    : "bg-[#f1ede6] text-[#51443b] hover:bg-[#ece8e1]"
                 }`}
               >
                 {isOfferCategory && <Tag className="w-4 h-4 text-current" />}
@@ -66,7 +87,7 @@ export default function MenuCatalog({
         </div>
       </div>
 
-      {/* Grid de Productos con Transición Acelerada */}
+      {/* Grid de Productos */}
       <AnimatePresence mode="wait">
         <m.div
           key={selectedCategory}
@@ -80,22 +101,23 @@ export default function MenuCatalog({
             <div
               key={item.id}
               id={`item-${item.id}`}
-              className={`p-5 rounded-2xl bg-white border transition-all duration-300 flex gap-4 relative ${
+              className={`p-5 rounded-2xl bg-white border transition-all duration-200 hover:-translate-y-0.5 flex gap-4 relative ${
                 item.esOferta
                   ? "border-[#81542b]/60 bg-[#fdf9f2]/40"
                   : "border-[#d5c3b7]/40"
               } ${
                 highlightedItemId === item.id
                   ? "border-[#81542b] ring-2 ring-[#81542b]/30 shadow-lg scale-[1.01]"
-                  : "shadow-xs hover:border-[#81542b]/40"
+                  : "shadow-xs hover:border-[#81542b]/40 active:scale-[0.99]"
               }`}
             >
-              {/* Imagen del Producto */}
+              {/* Imagen con Fallback */}
               <div className="relative flex-shrink-0">
                 <img
                   src={item.imagen}
                   alt={item.nombre}
-                  className="w-24 h-24 sm:w-28 sm:h-28 rounded-xl object-cover"
+                  onError={handleImageError}
+                  className="w-24 h-24 sm:w-28 sm:h-28 rounded-xl object-cover bg-[#f1ede6]"
                   loading="lazy"
                 />
                 {item.esOferta && (
@@ -105,7 +127,7 @@ export default function MenuCatalog({
                 )}
               </div>
 
-              {/* Información y Precios */}
+              {/* Información de Producto */}
               <div className="flex flex-col justify-between flex-grow">
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-1">

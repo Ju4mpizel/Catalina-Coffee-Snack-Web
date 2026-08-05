@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function BrandLogo({
   logoUrl = "/logo.svg",
   size = "md",
   onClick,
+  fetchPriority = "auto",
+  decoding = "async",
 }) {
   const [imgError, setImgError] = useState(false);
 
@@ -11,7 +13,7 @@ export default function BrandLogo({
   const dimensions =
     {
       sm: "h-10", // Móvil o espacios reducidos
-      md: "h-14 sm:h-16", // Tamaño por defecto para la Navbar
+      md: "h-12 sm:h-14", // Navbar / Footer (compacto en pantallas intermedias)
       lg: "h-20 sm:h-24", // Para el Footer o vistas destacadas
     }[size] || "h-14 sm:h-16";
 
@@ -25,6 +27,8 @@ export default function BrandLogo({
         <img
           src={logoUrl}
           alt="Catalina Coffee & Snack"
+          fetchPriority={fetchPriority}
+          decoding={decoding}
           onError={() => setImgError(true)}
           className={`${dimensions} w-auto object-contain transition-transform duration-300 group-hover:scale-105`}
         />

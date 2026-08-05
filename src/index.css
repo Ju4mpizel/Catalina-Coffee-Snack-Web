@@ -6,8 +6,52 @@
     transform: translate3d(0, 0, 0);
   }
   100% {
-    /* Mueve exactamente la mitad del contenido total triplicado/cuadruplicado */
     transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Levitación suave para el vaso del Hero */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(2deg);
+  }
+}
+
+/* Entrada de vista (Inicio <-> Catálogo): fade + slide-up */
+@keyframes view-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Entrada escalonada del Hero */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Aparición suave de elementos puntuales (subrayado activo, etc.) */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
@@ -29,6 +73,15 @@
 
   /* Registro de la animación en el motor de Tailwind */
   --animate-marquee: marquee 25s linear infinite;
+  --animate-float: float 5s ease-in-out infinite;
+  --animate-view-enter: view-enter 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-hero-rise: hero-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-fade-in: fade-in 0.35s ease-out both;
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+  will-change: transform;
 }
 
 .animate-marquee {
@@ -36,6 +89,24 @@
   width: max-content;
   animation: marquee 35s linear infinite;
   will-change: transform;
+}
+/* Sistema de aparición progresiva de secciones (fade + scale al hacer scroll).
+   SIN translateY: un desplazamiento vertical en la sección final jalaba la
+   página ~1cm hacia arriba al revelarse sobre el footer. El scale NO mueve la
+   posición en el flujo (no empuja ni jala nada) y se compone por GPU.
+   El IntersectionObserver en App.jsx añade `.is-visible` cuando la sección
+   entra. Las cascadas usan `transition-delay` inline por elemento. */
+[data-reveal] {
+  opacity: 0;
+  transform: scale(0.97);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* 4. Estilos base globales */
@@ -91,7 +162,6 @@ h2 {
   );
 }
 
-/* Lightweight photo warmth - no mix-blend-mode */
 .photo-warm {
   position: relative;
   overflow: hidden;
@@ -105,7 +175,6 @@ h2 {
   z-index: 1;
 }
 
-/* Section divider */
 .divider-warm {
   width: 100%;
   height: 1px;
@@ -130,7 +199,6 @@ h2 {
   right: -20%;
 }
 
-/* Scrollbar personalizada */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -145,7 +213,6 @@ h2 {
   background: #81542b;
 }
 
-/* Accesibilidad */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

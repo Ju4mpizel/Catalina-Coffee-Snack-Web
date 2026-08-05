@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import MarqueeBanner from "./components/MarqueeBanner";
@@ -6,12 +6,12 @@ import OffersCarousel from "./components/OffersCarousel";
 import AboutSection from "./components/AboutSection";
 import ProcessTimeline from "./components/ProcessTimeline";
 import Testimonials from "./components/Testimonials";
-import InstagramSection from "./components/InstagramSection";
+import InstagramSection from "./components/TiktokSection";
 import LocationSection from "./components/LocationSection";
 import MenuGallery from "./components/MenuGallery";
-import InfoBanner from "./components/InfoBanner";
 import MenuCatalog from "./components/MenuCatalog";
 import Footer from "./components/Footer";
+import WhatsAppButton from "./components/WhatsappButton";
 import { fetchMenuData } from "./services/menuService";
 import { Coffee } from "lucide-react";
 
@@ -24,6 +24,7 @@ export default function App() {
   const [ofertasItems, setOfertasItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Carga inicial de datos
   useEffect(() => {
     async function loadData() {
       setIsLoading(true);
@@ -35,11 +36,42 @@ export default function App() {
     loadData();
   }, []);
 
-  const handleGoToOffersMenu = () => {
-    setSelectedCategory("Ofertas Catalina");
-    setCurrentView("menu");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  // Revalidación silenciosa en segundo plano al volver a la pestaña (Visibility Change)
+  useEffect(() => {
+    const handleVisibilityChange = async () => {
+      if (document.visibilityState === "visible") {
+        const { menu, ofertas } = await fetchMenuData();
+        setMenuItems(menu);
+        setOfertasItems(ofertas);
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
+  // Aparición progresiva de secciones: añade `.is-visible` al entrar en viewport.
+  useEffect(() => {
+    const revealEls = document.querySelectorAll("[data-reveal]");
+    if (typeof IntersectionObserver === "undefined") {
+      revealEls.forEach((el) => el.classList.add("is-visible"));
+      return undefined;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -10% 0px" },
+    );
+    revealEls.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [currentView, isLoading]);
 
   const handleItemClickFromGallery = (item) => {
     setSelectedCategory(item.categoria);
@@ -62,7 +94,7 @@ export default function App() {
           <Coffee className="w-6 h-6" />
         </div>
         <p className="font-serif text-lg text-[#1c1c18]">
-          Cargando men&uacute; de Catalina...
+          Cargando menú de Catalina...
         </p>
       </div>
     );
@@ -82,10 +114,7 @@ export default function App() {
             <>
               <Hero onExploreMenu={() => setCurrentView("menu")} />
               <MarqueeBanner />
-              <OffersCarousel
-                ofertas={ofertasItems}
-                onGoToOffersMenu={handleGoToOffersMenu}
-              />
+              <OffersCarousel ofertas={ofertasItems} />
               <AboutSection />
               <ProcessTimeline />
               <div className="divider-warm max-w-6xl mx-auto px-6 my-2" />
@@ -101,7 +130,6 @@ export default function App() {
                 items={menuItems}
                 onItemClick={handleItemClickFromGallery}
               />
-              <InfoBanner />
               <MenuCatalog
                 items={menuItems}
                 selectedCategory={selectedCategory}
@@ -117,6 +145,9 @@ export default function App() {
         onNavigateHome={() => setCurrentView("inicio")}
         onNavigateMenu={() => setCurrentView("menu")}
       />
+
+      {/* Botón flotante de WhatsApp siempre visible */}
+      <WhatsAppButton />
     </div>
   );
 }

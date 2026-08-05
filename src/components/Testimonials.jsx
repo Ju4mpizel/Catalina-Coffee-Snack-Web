@@ -58,6 +58,7 @@ export default function Testimonials() {
   return (
     <section
       id="testimonios"
+      data-reveal
       className="relative py-12 sm:py-16 max-w-6xl mx-auto px-6 overflow-hidden scroll-mt-24"
     >
       <div className="text-center mb-12">
