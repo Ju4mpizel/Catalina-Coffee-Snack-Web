@@ -88,47 +88,7 @@ export default function App() {
   };
 
   return (
-    <AnimatePresence mode="wait">
-      {isLoading ? (
-        <m.div
-          key="loader"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
-          className="min-h-screen bg-[#fdf9f2] flex flex-col items-center justify-center gap-7 px-6"
-        >
-          {/* Logo con pulso suave */}
-          <img
-            src="/logo.svg"
-            alt="Catalina Coffee & Snack"
-            className="h-16 w-auto object-contain animate-pulse"
-            decoding="async"
-          />
-
-          {/* Anillo spinner fino */}
-          <div className="relative w-10 h-10" aria-hidden="true">
-            <div className="absolute inset-0 rounded-full border-2 border-[#81542b]/15" />
-            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#81542b] animate-spin" />
-          </div>
-
-          <div className="text-center space-y-2.5">
-            <p className="font-serif text-xl text-[#1c1c18]">
-              Preparando la experiencia...
-            </p>
-            <p className="text-xs text-[#81542b]/70 tracking-widest uppercase font-medium">
-              Catalina Coffee &amp; Snack
-            </p>
-          </div>
-        </m.div>
-      ) : (
-        <m.div
-          key="app"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
-          className="min-h-screen bg-[#fdf9f2] text-[#1c1c18] font-sans flex flex-col justify-between"
-        >
+    <div className="min-h-screen bg-[#fdf9f2] text-[#1c1c18] font-sans flex flex-col justify-between">
       <div>
         <Navbar
           onNavigateHome={() => setCurrentView("inicio")}
@@ -173,10 +133,46 @@ export default function App() {
         onNavigateMenu={() => setCurrentView("menu")}
       />
 
-        {/* Botón flotante de WhatsApp siempre visible */}
-        <WhatsAppButton />
-        </m.div>
-      )}
-    </AnimatePresence>
+      {/* Botón flotante de WhatsApp siempre visible */}
+      <WhatsAppButton />
+
+      {/* Loader de bienvenida: overlay fijo que se desvanece al terminar la carga.
+          La app se monta debajo para que el IntersectionObserver de [data-reveal]
+          funcione desde el inicio (con mode="wait" las secciones nunca se mostraban). */}
+      <AnimatePresence>
+        {isLoading && (
+          <m.div
+            key="loader"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="fixed inset-0 z-[100] bg-[#fdf9f2] flex flex-col items-center justify-center gap-7 px-6"
+          >
+            {/* Logo con pulso suave */}
+            <img
+              src="/logo.svg"
+              alt="Catalina Coffee & Snack"
+              className="h-16 w-auto object-contain animate-pulse"
+              decoding="async"
+            />
+
+            {/* Anillo spinner fino */}
+            <div className="relative w-10 h-10" aria-hidden="true">
+              <div className="absolute inset-0 rounded-full border-2 border-[#81542b]/15" />
+              <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#81542b] animate-spin" />
+            </div>
+
+            <div className="text-center space-y-2.5">
+              <p className="font-serif text-xl text-[#1c1c18]">
+                Preparando la experiencia...
+              </p>
+              <p className="text-xs text-[#81542b]/70 tracking-widest uppercase font-medium">
+                Catalina Coffee &amp; Snack
+              </p>
+            </div>
+          </m.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
