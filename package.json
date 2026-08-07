@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node --env-file=.env scripts/generate-menu-snapshot.mjs && vite",
-    "build": "node --env-file=.env scripts/generate-menu-snapshot.mjs && vite build",
-    "generate-menu": "node --env-file=.env scripts/generate-menu-snapshot.mjs",
+    "dev": "node scripts/generate-menu-snapshot.mjs && vite",
+    "build": "node scripts/generate-menu-snapshot.mjs && vite build",
+    "generate-menu": "node scripts/generate-menu-snapshot.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

@@ -2,6 +2,15 @@ import { writeFile, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { mockMenu, mockOfertas } from "../src/data/mockMenu.js";
 
+// Si existe el archivo .env en desarrollo local, cargar las variables
+if (existsSync(".env")) {
+  try {
+    process.loadEnvFile(".env");
+  } catch (e) {
+    // Si la versión de Node no lo soporta o falla la lectura, continuar suavemente
+  }
+}
+
 const SHEET_ID = process.env.VITE_SHEETS_MENU_ID;
 const OUT_PATH = "src/data/menuSnapshot.json";
 
