@@ -78,10 +78,10 @@ export default function Navbar({
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-[#81542b] hover:text-white text-sm font-semibold px-3 sm:px-4 py-2 rounded-full border border-[#81542b] hover:bg-[#81542b] transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+            className="flex items-center gap-1.5 text-[#81542b] hover:text-white text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-full border border-[#81542b] hover:bg-[#81542b] transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
           >
-            <MessageCircle className="w-4 h-4 fill-current" />
-            <span className="hidden sm:inline">WhatsApp</span>
+            <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
+            <span>Contáctanos</span>
           </a>
 
           <button

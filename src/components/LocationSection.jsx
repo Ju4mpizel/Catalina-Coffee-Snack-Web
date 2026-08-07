@@ -10,7 +10,6 @@ const directionsUrl =
 export default function LocationSection() {
   return (
     <>
-      <div className="divider-warm my-12" />
       <section id="location" data-reveal className="py-12 sm:py-20 scroll-mt-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#81542b] block mb-4">
