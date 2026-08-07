@@ -4,6 +4,12 @@ import { LazyMotion, domAnimation } from 'framer-motion'
 import './index.css'
 import App from './App.jsx'
 
+// El sitio siempre inicia arriba al recargar: evita que el navegador
+// restaure la posición de scroll anterior (Chrome/Edge lo hacen por defecto).
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual'
+}
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <LazyMotion features={domAnimation}>
