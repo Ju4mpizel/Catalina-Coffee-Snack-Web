@@ -24,7 +24,7 @@ export default function App() {
   const initialData = getInitialMenuData();
   const [menuItems, setMenuItems] = useState(initialData.menu);
   const [ofertasItems, setOfertasItems] = useState(initialData.ofertas);
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoading = false;
 
   // Revalidación silenciosa en segundo plano al montar la app
   useEffect(() => {
