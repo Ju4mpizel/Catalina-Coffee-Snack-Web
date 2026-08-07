@@ -1,7 +1,19 @@
 import { mockMenu, mockOfertas } from "../data/mockMenu";
+import menuSnapshot from "../data/menuSnapshot.json";
 
 // Lee la ID exclusivamente desde la variable de entorno de Vite (.env)
 const SHEET_ID = import.meta.env.VITE_SHEETS_MENU_ID;
+
+// Retorna los datos síncronos generados en build time.
+// Garantiza que la app arranque con el menú completo pintado en 0ms.
+export function getInitialMenuData() {
+  const hasSnapshotMenu = menuSnapshot?.menu?.length > 0;
+  return {
+    menu: hasSnapshotMenu ? menuSnapshot.menu : mockMenu,
+    ofertas:
+      menuSnapshot?.ofertas?.length > 0 ? menuSnapshot.ofertas : mockOfertas,
+  };
+}
 
 // Helper para convertir valores de Sheets en booleanos tolerantes a errores humanos
 const parseBoolean = (val) => {
@@ -28,20 +40,18 @@ const parseNumber = (val) => {
 export async function fetchMenuData() {
   if (!SHEET_ID) {
     console.warn(
-      "VITE_SHEETS_MENU_ID no está configurada en el archivo .env. Usando datos locales por defecto.",
+      "VITE_SHEETS_MENU_ID no está configurada en el archivo .env. Usando snapshot / datos locales.",
     );
-    return { menu: mockMenu, ofertas: mockOfertas };
+    return getInitialMenuData();
   }
 
   try {
-    // Timestamp para evitar caché del navegador / CDN de Google
     const GVIZ_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&_t=${Date.now()}`;
 
     const response = await fetch(GVIZ_URL, { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const text = await response.text();
 
-    // Extraer JSON limpio buscando las llaves dinámicamente (elimina el offset mágico 47)
     const jsonString = text.substring(
       text.indexOf("{"),
       text.lastIndexOf("}") + 1,
@@ -50,7 +60,7 @@ export async function fetchMenuData() {
     const rows = data.table?.rows || [];
 
     const parsedMenu = rows
-      .filter((row) => row && row.c && row.c[1] && row.c[1].v) // Filtrar filas vacías
+      .filter((row) => row && row.c && row.c[1] && row.c[1].v)
       .map((row, index) => {
         const c = row.c;
         const precio = parseNumber(c[3]?.v);
@@ -71,8 +81,8 @@ export async function fetchMenuData() {
           imagen:
             c[6]?.v ||
             "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800",
-          destacadoPinterest: esDestacado ? "SÍ" : "NO", // Mantiene string "SÍ"/"NO" para compatibilidad con la Galería
-          destacado: esDestacado, // Booleano nativo
+          destacadoPinterest: esDestacado ? "SÍ" : "NO",
+          destacado: esDestacado,
           formatoPinterest:
             c[8]?.v?.toString().toLowerCase().trim() || "cuadrado",
           esOferta: parseBoolean(c[9]?.v),
@@ -100,14 +110,15 @@ export async function fetchMenuData() {
     }, []);
 
     return {
-      menu: parsedMenu.length > 0 ? parsedMenu : mockMenu,
-      ofertas: parsedOfertas.length > 0 ? parsedOfertas : mockOfertas,
+      menu: parsedMenu.length > 0 ? parsedMenu : getInitialMenuData().menu,
+      ofertas:
+        parsedOfertas.length > 0 ? parsedOfertas : getInitialMenuData().ofertas,
     };
   } catch (error) {
     console.error(
-      "Error al conectar con Google Sheets, usando datos locales:",
+      "Error al conectar con Google Sheets, usando snapshot local:",
       error,
     );
-    return { menu: mockMenu, ofertas: mockOfertas };
+    return getInitialMenuData();
   }
 }

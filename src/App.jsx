@@ -12,7 +12,7 @@ import MenuGallery from "./components/MenuGallery";
 import MenuCatalog from "./components/MenuCatalog";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsappButton";
-import { fetchMenuData } from "./services/menuService";
+import { fetchMenuData, getInitialMenuData } from "./services/menuService";
 import { AnimatePresence, m } from "framer-motion";
 
 export default function App() {
@@ -20,29 +20,29 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState("Ofertas Catalina");
   const [highlightedItemId, setHighlightedItemId] = useState(null);
 
-  const [menuItems, setMenuItems] = useState([]);
-  const [ofertasItems, setOfertasItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // Inicialización síncrona instantánea desde el snapshot
+  const initialData = getInitialMenuData();
+  const [menuItems, setMenuItems] = useState(initialData.menu);
+  const [ofertasItems, setOfertasItems] = useState(initialData.ofertas);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Carga inicial de datos
+  // Revalidación silenciosa en segundo plano al montar la app
   useEffect(() => {
     async function loadData() {
-      setIsLoading(true);
       const { menu, ofertas } = await fetchMenuData();
-      setMenuItems(menu);
-      setOfertasItems(ofertas);
-      setIsLoading(false);
+      if (menu && menu.length > 0) setMenuItems(menu);
+      if (ofertas && ofertas.length > 0) setOfertasItems(ofertas);
     }
     loadData();
   }, []);
 
-  // Revalidación silenciosa en segundo plano al volver a la pestaña (Visibility Change)
+  // Revalidación silenciosa en segundo plano al volver a la pestaña
   useEffect(() => {
     const handleVisibilityChange = async () => {
       if (document.visibilityState === "visible") {
         const { menu, ofertas } = await fetchMenuData();
-        setMenuItems(menu);
-        setOfertasItems(ofertas);
+        if (menu && menu.length > 0) setMenuItems(menu);
+        if (ofertas && ofertas.length > 0) setOfertasItems(ofertas);
       }
     };
 
@@ -51,9 +51,11 @@ export default function App() {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
-  // Aparición progresiva de secciones: añade `.is-visible` al entrar en viewport.
+  // Aparición progresiva de secciones con IntersectionObserver
   useEffect(() => {
-    const revealEls = document.querySelectorAll("[data-reveal]:not(.is-visible)");
+    const revealEls = document.querySelectorAll(
+      "[data-reveal]:not(.is-visible)",
+    );
     if (typeof IntersectionObserver === "undefined") {
       revealEls.forEach((el) => el.classList.add("is-visible"));
       return undefined;
@@ -136,9 +138,7 @@ export default function App() {
       {/* Botón flotante de WhatsApp siempre visible */}
       <WhatsAppButton />
 
-      {/* Loader de bienvenida: overlay fijo que se desvanece al terminar la carga.
-          La app se monta debajo para que el IntersectionObserver de [data-reveal]
-          funcione desde el inicio (con mode="wait" las secciones nunca se mostraban). */}
+      {/* Overlay de Loader (se desvanece si isLoading es true) */}
       <AnimatePresence>
         {isLoading && (
           <m.div
@@ -148,7 +148,6 @@ export default function App() {
             transition={{ duration: 0.35, ease: "easeOut" }}
             className="fixed inset-0 z-[100] bg-[#fdf9f2] flex flex-col items-center justify-center gap-7 px-6"
           >
-            {/* Logo con pulso suave */}
             <img
               src="/logo.svg"
               alt="Catalina Coffee & Snack"
@@ -156,7 +155,6 @@ export default function App() {
               decoding="async"
             />
 
-            {/* Anillo spinner fino */}
             <div className="relative w-10 h-10" aria-hidden="true">
               <div className="absolute inset-0 rounded-full border-2 border-[#81542b]/15" />
               <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#81542b] animate-spin" />

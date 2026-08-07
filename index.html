@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <link
       rel="preload"
@@ -24,6 +25,9 @@
     <meta name="author" content="Catalina Coffee &amp; Snack" />
     <meta name="robots" content="index, follow" />
 
+    <!-- IMPORTANTE: cuando compres el dominio, reemplaza TU-DOMINIO.com en TODO el archivo (Ctrl+H) -->
+    <link rel="canonical" href="https://TU-DOMINIO.com/" />
+
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Catalina Coffee &amp; Snack" />
     <meta property="og:locale" content="es_BO" />
@@ -39,6 +43,9 @@
       property="og:image"
       content="https://TU-DOMINIO.com/Catalina_cup.png"
     />
+    <!-- Asegúrate que Catalina_cup.png sea 1200x630px para que WhatsApp/Facebook no recorten la preview -->
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
       content="Café de Catalina Coffee &amp; Snack"
@@ -70,16 +77,45 @@
       {
         "@context": "https://schema.org",
         "@type": "CafeOrCoffeeShop",
+        "@id": "https://TU-DOMINIO.com/#negocio",
         "name": "Catalina Coffee & Snack",
+        "url": "https://TU-DOMINIO.com/",
         "image": "https://TU-DOMINIO.com/Catalina_cup.png",
         "description": "Café de especialidad, repostería artesanal y snacks en Cochabamba.",
+        "telephone": "+591XXXXXXXX",
+        "priceRange": "$$",
+        "servesCuisine": ["Café", "Repostería", "Snacks"],
         "address": {
           "@type": "PostalAddress",
+          "streetAddress": "PON-TU-DIRECCION-EXACTA",
           "addressLocality": "Cochabamba",
+          "addressRegion": "Cochabamba",
           "addressCountry": "BO"
         },
-        "servesCuisine": ["Café", "Repostería", "Snacks"],
-        "priceRange": "$$"
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -17.3895,
+          "longitude": -66.1568
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday"
+            ],
+            "opens": "08:00",
+            "closes": "20:00"
+          }
+        ],
+        "sameAs": [
+          "https://www.instagram.com/TU-USUARIO",
+          "https://www.facebook.com/TU-USUARIO"
+        ]
       }
     </script>
   </head>
