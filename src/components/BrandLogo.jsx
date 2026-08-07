@@ -15,6 +15,7 @@ export default function BrandLogo({
       sm: "h-10", // Móvil o espacios reducidos
       md: "h-12 sm:h-14", // Navbar / Footer (compacto en pantallas intermedias)
       lg: "h-20 sm:h-24", // Para el Footer o vistas destacadas
+      footer: "h-10 md:h-14", // Footer: compacto en móvil, estándar en desktop
     }[size] || "h-14 sm:h-16";
 
   return (

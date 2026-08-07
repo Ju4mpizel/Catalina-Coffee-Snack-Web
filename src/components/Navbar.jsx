@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AnimatePresence, m } from "framer-motion";
 import { Menu, X, Coffee, MessageCircle } from "lucide-react";
 import BrandLogo from "./BrandLogo";
 import { getWhatsappUrl } from "../config/site";
@@ -42,7 +43,7 @@ export default function Navbar({
     }`;
 
   return (
-    <header className="sticky top-0 z-50 bg-[#fdf9f2]/95 border-b border-[#d5c3b7]/40 shadow-sm">
+    <header className="sticky top-0 z-50 bg-[#fdf9f2]/95 border-b border-[#d5c3b7]/40 shadow-sm [transform:translateZ(0)]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-3">
         {/* Logo */}
         <div className="shrink-0">
@@ -86,10 +87,9 @@ export default function Navbar({
           <button
             type="button"
             onClick={handleMenuClick}
-            className="flex items-center gap-2 bg-[#81542b] hover:bg-[#6b4321] active:scale-95 text-white text-sm font-semibold px-4 sm:px-5 py-2 rounded-full shadow-xs hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+            className="flex items-center bg-[#81542b] hover:bg-[#6b4321] active:scale-95 text-white text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-full shadow-xs hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
           >
-            <Coffee className="w-4 h-4" />
-            <span className="hidden sm:inline">Ver Menú</span>
+            <span>Menú</span>
           </button>
 
           <button
@@ -108,15 +108,19 @@ export default function Navbar({
         </div>
       </div>
 
-      {/* Mobile Drawer: siempre montado para animar entrada/salida (slide-down + fade) */}
-      <div
-        className={`lg:hidden bg-[#fdf9f2] overflow-hidden transition-all duration-300 ease-out ${
-          isMobileMenuOpen
-            ? "visible max-h-[28rem] opacity-100 translate-y-0 scale-100"
-            : "invisible max-h-0 opacity-0 -translate-y-3 scale-[0.98]"
-        }`}
-        style={{ transformOrigin: "top" }}
-      >
+      {/* Mobile Drawer: monta/desmonta con AnimatePresence animando SOLO opacity + y
+          (transform, acelerado por GPU). Sin max-height ni blur pesados. */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <m.div
+            key="mobile-drawer"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className="lg:hidden bg-[#fdf9f2]/98 shadow-md overflow-hidden will-change-transform"
+            style={{ transformOrigin: "top" }}
+          >
         <div className="px-6 py-6 space-y-1">
           <button
             type="button"
@@ -178,7 +182,9 @@ export default function Navbar({
             </button>
           </div>
         </div>
-      </div>
+        </m.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

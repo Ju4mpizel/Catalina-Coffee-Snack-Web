@@ -118,9 +118,18 @@ body {
   background-color: var(--color-surface-cream);
   color: var(--color-deep-roast);
   font-family: var(--font-sans);
+  /* `hidden` convierte <body> en scroll container y rompe `position: sticky`
+     en móvil (la navbar vibra al hacer scroll). `clip` recorta sin crear
+     scroll container; fallback para navegadores antiguos. */
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@supports (overflow: clip) {
+  body {
+    overflow-x: clip;
+  }
 }
 
 h1,

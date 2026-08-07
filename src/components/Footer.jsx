@@ -71,17 +71,17 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
       {/* Brillo de tueste sutil */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-[radial-gradient(ellipse_at_top,rgba(193,140,93,0.08),transparent_60%)]" />
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 md:px-8 pt-14 pb-8">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-8 py-8 md:py-16">
         {/* Columna principal */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {/* Marca */}
-          <div className="lg:col-span-4 flex flex-col items-start gap-5">
+          <div className="sm:col-span-2 lg:col-span-1 flex flex-col items-start gap-5">
             <BrandLogo
               logoUrl="/logo_white.svg"
-              size="md"
+              size="footer"
               onClick={scrollTop}
             />
-            <p className="text-sm text-[#c9bfb0] leading-relaxed max-w-sm">
+            <p className="text-xs sm:text-sm text-[#c9bfb0] leading-relaxed max-w-sm">
               Café de origen boliviano, repostería horneada cada mañana y el
               rincón perfecto en Cochabamba para hacer una pausa.
             </p>
@@ -98,10 +98,7 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
           </div>
 
           {/* Navegación */}
-          <nav
-            className="lg:col-span-2"
-            aria-label="Enlaces del pie de página"
-          >
+          <nav aria-label="Enlaces del pie de página">
             <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#c18c5d] mb-5">
               Explorar
             </h3>
@@ -111,7 +108,7 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
                   <button
                     type="button"
                     onClick={link.onClick}
-                    className="text-sm text-[#c9bfb0] hover:text-[#f6bb88] transition-colors duration-200 cursor-pointer"
+                    className="text-xs sm:text-sm text-[#c9bfb0] hover:text-[#f6bb88] transition-colors duration-200 cursor-pointer"
                   >
                     {link.label}
                   </button>
@@ -121,11 +118,11 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
           </nav>
 
           {/* Ubicación y horarios */}
-          <div className="lg:col-span-3">
+          <div>
             <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#c18c5d] mb-5">
               Visítanos
             </h3>
-            <ul className="space-y-4 text-sm">
+            <ul className="space-y-3 text-xs sm:text-sm">
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-[#c18c5d] shrink-0 mt-0.5" />
                 <span className="text-[#c9bfb0]">Cochabamba, Bolivia</span>
@@ -143,7 +140,7 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
           </div>
 
           {/* Contacto y redes */}
-          <div className="lg:col-span-3">
+          <div>
             <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#c18c5d] mb-5">
               Hablemos
             </h3>
@@ -157,7 +154,7 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Seguir en ${social.label}`}
-                      className="w-10 h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-[#fdf9f2] hover:bg-[#c18c5d] hover:text-[#1c1c18] hover:border-transparent hover:-translate-y-0.5 active:scale-95 transition-all duration-200"
+                      className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-[#fdf9f2] hover:bg-[#c18c5d] hover:text-[#1c1c18] hover:border-transparent hover:-translate-y-0.5 active:scale-95 transition-all duration-200"
                     >
                       {social.icon}
                     </a>
@@ -170,7 +167,7 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
         </div>
 
         {/* Barra inferior */}
-        <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#9f978c]">
+        <div className="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] sm:text-xs text-center text-[#9f978c]">
           <p>
             &copy; {new Date().getFullYear()} Catalina Coffee &amp; Snack
             &mdash; Cochabamba, Bolivia

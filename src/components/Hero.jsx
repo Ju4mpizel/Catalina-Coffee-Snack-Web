@@ -66,7 +66,7 @@ export default function Hero({ onExploreMenu }) {
             className="md:col-span-5 flex justify-center items-center relative animate-hero-rise"
             style={{ animationDelay: "400ms" }}
           >
-            <div className="relative w-full max-w-[260px] sm:max-w-[320px] md:max-w-[380px]">
+            <div className="relative w-full max-w-[160px] mx-auto my-4 md:max-w-[380px] md:my-0">
               <img
                 src={catalinaCupImg}
                 alt="Vaso Catalina Coffee"
