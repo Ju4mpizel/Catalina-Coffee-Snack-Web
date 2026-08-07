@@ -58,16 +58,15 @@ export default function MenuGallery({ items, onItemClick }) {
               return (
                 <m.div
                   key={`${item.id}-${item.formatoPinterest}`}
-                  layout
                   role="button"
                   tabIndex={0}
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.97 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
+                  exit={{ opacity: 0, scale: 0.97 }}
                   transition={{
-                    duration: 0.35,
+                    duration: 0.3,
                     ease: "easeOut",
-                    delay: Math.min(index, 8) * 0.06,
+                    delay: Math.min(index, 8) * 0.05,
                   }}
                   onClick={() => onItemClick?.(item)}
                   onKeyDown={(e) => {
@@ -76,7 +75,7 @@ export default function MenuGallery({ items, onItemClick }) {
                       onItemClick?.(item);
                     }
                   }}
-                  className={`relative group cursor-pointer break-inside-avoid w-full mb-3 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl bg-[#f1ede6] border border-[#d5c3b7]/40 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 active:scale-[0.98] ${aspectClass}`}
+                  className={`relative group cursor-pointer break-inside-avoid w-full mb-3 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl bg-[#f1ede6] border border-[#d5c3b7]/40 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-shadow duration-300 active:scale-[0.98] ${aspectClass}`}
                 >
                   <img
                     src={item.imagen}
