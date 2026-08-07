@@ -4,8 +4,24 @@ import catalinaCupImg from "../assets/Catalina_cup.webp";
 export default function Hero({ onExploreMenu }) {
   return (
     <section className="relative pt-8 pb-16 md:pt-16 md:pb-28 overflow-hidden">
+      {/* Fondo: imagen de la cafetería a sangre completa, nítida, con fade-in sutil */}
+      <img
+        src="/Catalina_BG.webp"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover animate-hero-bg"
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
+      />
+
+      {/* Overlay cálido "deep roast": oscurece el fondo para que la imagen respire
+          y el texto crema destaque. Más denso abajo (funda con la página), más
+          ligero arriba (deja ver la foto). */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#1c1c18]/95 via-[#1c1c18]/60 to-[#1c1c18]/40" />
+
       {/* Resplandor cálido detrás del vaso */}
-      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-[#81542b]/10 blur-3xl rounded-full pointer-events-none hidden md:block" />
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-[#81542b]/20 blur-3xl rounded-full pointer-events-none hidden md:block" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 items-center">
@@ -14,7 +30,7 @@ export default function Hero({ onExploreMenu }) {
             {/* Badge */}
             <div className="flex flex-col items-center md:items-start mb-6">
               <div
-                className="inline-flex items-center px-4 py-1.5 rounded-full bg-[#f1ede6] border border-[#d5c3b7]/60 text-[#7c5730] text-xs font-semibold tracking-wider uppercase animate-hero-rise"
+                className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#f6bb88] text-xs font-semibold tracking-wider uppercase animate-hero-rise"
                 style={{ animationDelay: "80ms" }}
               >
                 <span>Especialidad & Repostería Artesanal</span>
@@ -23,18 +39,18 @@ export default function Hero({ onExploreMenu }) {
 
             {/* Título Principal */}
             <h1
-              className="font-serif text-4xl sm:text-5xl md:text-6xl text-[#1c1c18] font-normal tracking-wide leading-[1.15] mb-6 animate-hero-rise"
+              className="font-serif text-4xl sm:text-5xl md:text-6xl text-[#fdf9f2] font-normal tracking-wide leading-[1.15] mb-6 animate-hero-rise"
               style={{ animationDelay: "160ms" }}
             >
               Un espacio donde cada detalle se siente{" "}
-              <span className="italic text-[#81542b] block sm:inline">
+              <span className="italic text-[#f6bb88] block sm:inline">
                 hecho a mano
               </span>
             </h1>
 
             {/* Descripción */}
             <p
-              className="font-sans text-base sm:text-lg text-[#3b2411] max-w-xl mx-auto md:mx-0 leading-relaxed mb-8 font-normal animate-hero-rise"
+              className="font-sans text-base sm:text-lg text-[#e6d9c8] max-w-xl mx-auto md:mx-0 leading-relaxed mb-8 font-normal animate-hero-rise"
               style={{ animationDelay: "240ms" }}
             >
               Café de origen cuidadosamente tostado, repostería horneada

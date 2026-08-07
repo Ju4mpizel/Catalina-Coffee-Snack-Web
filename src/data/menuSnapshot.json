@@ -36,7 +36,7 @@
       "imagen": "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800",
       "destacadoPinterest": "SÍ",
       "destacado": true,
-      "formatoPinterest": "cuadrado",
+      "formatoPinterest": "largo",
       "esOferta": false
     },
     {
@@ -88,7 +88,7 @@
       "imagen": "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800",
       "destacadoPinterest": "SÍ",
       "destacado": true,
-      "formatoPinterest": "cuadrado",
+      "formatoPinterest": "largo",
       "esOferta": false
     },
     {
@@ -101,7 +101,7 @@
       "imagen": "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800",
       "destacadoPinterest": "SÍ",
       "destacado": true,
-      "formatoPinterest": "cuadrado",
+      "formatoPinterest": "largo",
       "esOferta": false
     }
   ],
