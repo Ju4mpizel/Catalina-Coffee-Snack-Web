@@ -118,7 +118,7 @@ export default function Navbar({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
-            className="lg:hidden bg-[#fdf9f2]/98 shadow-md overflow-hidden will-change-transform"
+            className="absolute top-full left-0 w-full z-50 lg:hidden bg-[#fdf9f2]/98 shadow-xl border-b border-[#d5c3b7]/30 overflow-y-auto will-change-transform max-h-[calc(100dvh-5rem)]"
             style={{ transformOrigin: "top" }}
           >
         <div className="px-6 py-6 space-y-1">

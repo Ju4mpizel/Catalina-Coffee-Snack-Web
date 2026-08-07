@@ -1,5 +1,4 @@
 import { ArrowDown } from "lucide-react";
-import BrandLogo from "./BrandLogo";
 import catalinaCupImg from "../assets/Catalina_cup.webp";
 
 export default function Hero({ onExploreMenu }) {
@@ -12,11 +11,8 @@ export default function Hero({ onExploreMenu }) {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 items-center">
           {/* COLUMNA IZQUIERDA: TEXTO Y BOTÓN */}
           <div className="md:col-span-7 text-center md:text-left">
-            {/* Logo y Badge */}
-            <div className="flex flex-col items-center md:items-start gap-4 mb-6">
-              <div className="animate-hero-rise">
-                <BrandLogo size="lg" fetchPriority="high" decoding="sync" />
-              </div>
+            {/* Badge */}
+            <div className="flex flex-col items-center md:items-start mb-6">
               <div
                 className="inline-flex items-center px-4 py-1.5 rounded-full bg-[#f1ede6] border border-[#d5c3b7]/60 text-[#7c5730] text-xs font-semibold tracking-wider uppercase animate-hero-rise"
                 style={{ animationDelay: "80ms" }}
