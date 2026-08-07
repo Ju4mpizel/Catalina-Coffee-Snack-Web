@@ -2,27 +2,31 @@ import { writeFile, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { mockMenu, mockOfertas } from "../src/data/mockMenu.js";
 
-// Si existe el archivo .env en desarrollo local, cargar las variables
 if (existsSync(".env")) {
   try {
     process.loadEnvFile(".env");
   } catch (e) {
-    // Si la versión de Node no lo soporta o falla la lectura, continuar suavemente
+    // ignorar en entornos donde no aplique
   }
 }
 
 const SHEET_ID = process.env.VITE_SHEETS_MENU_ID;
 const OUT_PATH = "src/data/menuSnapshot.json";
 
-const parseBoolean = (val) => {
+// parseBoolean ultrasensible: evalúa .v, .f, booleanos, números y cadenas en español/inglés
+const parseBoolean = (cell) => {
+  if (!cell) return false;
+  const val = cell.v !== undefined && cell.v !== null ? cell.v : cell.f;
   if (val === undefined || val === null) return false;
   if (typeof val === "boolean") return val;
   if (typeof val === "number") return val === 1;
   const str = val.toString().toUpperCase().trim();
-  return ["SÍ", "SI", "YES", "TRUE", "1"].includes(str);
+  return ["VERDADERO", "VERDAD", "SÍ", "SI", "YES", "TRUE", "1"].includes(str);
 };
 
-const parseNumber = (val) => {
+const parseNumber = (cell) => {
+  if (!cell) return 0;
+  const val = cell.v !== undefined && cell.v !== null ? cell.v : cell.f;
   if (val === undefined || val === null || val === "") return 0;
   if (typeof val === "number") return val;
   const cleaned = val
@@ -45,20 +49,30 @@ async function fetchFromSheet() {
   );
   const data = JSON.parse(jsonString);
 
-  const rows = data.table?.rows || [];
+  const rawRows = data.table?.rows || [];
+
+  // Detectar si la primera fila son los encabezados (ej. "ID", "NOMBRE PRODUCTO")
+  const firstRowIsHeader =
+    rawRows.length > 0 &&
+    rawRows[0].c &&
+    rawRows[0].c[1]?.v?.toString().toLowerCase().includes("nombre");
+
+  // Si la primera fila es encabezado se descarta, si es un producto real se conserva
+  const rows = firstRowIsHeader ? rawRows.slice(1) : rawRows;
 
   const parsedMenu = rows
-    .slice(1)
-    .filter((row) => row.c && row.c[1]?.v)
+    .filter((row) => row && row.c && row.c[1] && row.c[1]?.v)
     .map((row, index) => {
       const c = row.c;
-      const esDestacado = parseBoolean(c[7]?.v);
-      const precio = parseNumber(c[3]?.v);
-      const precioAntesVal = parseNumber(c[4]?.v);
+      const nombre = c[1]?.v?.toString().trim() || "Sin nombre";
+      const esDestacado = parseBoolean(c[7]);
+      const esOfertaVal = parseBoolean(c[9]);
+      const precio = parseNumber(c[3]);
+      const precioAntesVal = parseNumber(c[4]);
 
       return {
         id: c[0]?.v?.toString() || `item-${index + 1}`,
-        nombre: c[1]?.v?.toString().trim() || "Sin nombre",
+        nombre: nombre,
         categoria: c[2]?.v?.toString().trim() || "General",
         precio: precio,
         precioAntes: precioAntesVal > 0 ? precioAntesVal : null,
@@ -70,12 +84,15 @@ async function fetchFromSheet() {
         destacado: esDestacado,
         formatoPinterest:
           c[8]?.v?.toString().toLowerCase().trim() || "cuadrado",
-        esOferta: parseBoolean(c[9]?.v),
+        esOferta: esOfertaVal,
       };
     });
 
   const ofertas = parsedMenu.reduce((acc, item) => {
-    if (item.esOferta || item.categoria.toLowerCase() === "ofertas catalina") {
+    const esCategoriaOferta = item.categoria.toLowerCase().includes("oferta");
+    const tieneDescuento = item.precioAntes && item.precioAntes > item.precio;
+
+    if (item.esOferta || esCategoriaOferta || tieneDescuento) {
       acc.push({
         id: item.id,
         titulo: item.nombre,
@@ -90,6 +107,21 @@ async function fetchFromSheet() {
     }
     return acc;
   }, []);
+
+  // Diagnóstico en consola para ver qué detectó exactamente
+  console.log("\n--- DIAGNÓSTICO DE PRODUCTOS Y OFERTAS ---");
+  parsedMenu.forEach((p) => {
+    const esOf =
+      p.esOferta ||
+      p.categoria.toLowerCase().includes("oferta") ||
+      (p.precioAntes && p.precioAntes > p.precio);
+    console.log(
+      `• [${esOf ? "OFERTA" : "PRODUCTO"}] ${p.nombre} | Cat: "${
+        p.categoria
+      }" | esOferta: ${p.esOferta}`,
+    );
+  });
+  console.log("-------------------------------------------\n");
 
   return { menu: parsedMenu, ofertas };
 }

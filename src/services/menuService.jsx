@@ -21,7 +21,7 @@ const parseBoolean = (val) => {
   if (typeof val === "boolean") return val;
   if (typeof val === "number") return val === 1;
   const str = val.toString().toUpperCase().trim();
-  return ["SÍ", "SI", "YES", "TRUE", "1"].includes(str);
+  return ["VERDADERO", "VERDAD", "SÍ", "SI", "YES", "TRUE", "1"].includes(str);
 };
 
 // Helper para limpiar precios (distingue comas de miles vs comas decimales)

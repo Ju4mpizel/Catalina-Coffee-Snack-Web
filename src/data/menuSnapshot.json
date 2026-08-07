@@ -1,6 +1,19 @@
 {
   "menu": [
     {
+      "id": "1",
+      "nombre": "Combo Mañanero",
+      "categoria": "Ofertas Catalina",
+      "precio": 32,
+      "precioAntes": 40,
+      "descripcion": "Cappuccino Artesanal + Croissant de Almendras. (Ahorras Bs. 8)",
+      "imagen": "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800",
+      "destacadoPinterest": "NO",
+      "destacado": false,
+      "formatoPinterest": "largo",
+      "esOferta": true
+    },
+    {
       "id": "2",
       "nombre": "Tarde de Moka & Queso",
       "categoria": "Ofertas Catalina",
@@ -93,6 +106,16 @@
     }
   ],
   "ofertas": [
+    {
+      "id": "1",
+      "titulo": "Combo Mañanero",
+      "descuento": "Oferta",
+      "descripcion": "Cappuccino Artesanal + Croissant de Almendras. (Ahorras Bs. 8)",
+      "precioAntes": 40,
+      "precioOferta": 32,
+      "imagen": "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800",
+      "valido": "Disponible Hoy"
+    },
     {
       "id": "2",
       "titulo": "Tarde de Moka & Queso",
