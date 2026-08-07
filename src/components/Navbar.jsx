@@ -47,7 +47,11 @@ export default function Navbar({
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-3">
         {/* Logo */}
         <div className="shrink-0">
-          <BrandLogo size="md" onClick={handleHomeClick} />
+          <BrandLogo
+            size="md"
+            onClick={handleHomeClick}
+            ariaLabel="Catalina Coffee - Página de inicio"
+          />
         </div>
 
         {/* Desktop Nav (solo desde lg; antes md amontonaba los enlaces) */}

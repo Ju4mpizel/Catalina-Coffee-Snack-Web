@@ -53,7 +53,7 @@ export default function App() {
 
   // Aparición progresiva de secciones: añade `.is-visible` al entrar en viewport.
   useEffect(() => {
-    const revealEls = document.querySelectorAll("[data-reveal]");
+    const revealEls = document.querySelectorAll("[data-reveal]:not(.is-visible)");
     if (typeof IntersectionObserver === "undefined") {
       revealEls.forEach((el) => el.classList.add("is-visible"));
       return undefined;
@@ -88,7 +88,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fdf9f2] text-[#1c1c18] font-sans flex flex-col justify-between">
+    <div className="min-h-screen w-full bg-[#fdf9f2] text-[#1c1c18] font-sans flex flex-col justify-between relative">
       <div>
         <Navbar
           onNavigateHome={() => setCurrentView("inicio")}

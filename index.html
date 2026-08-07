@@ -1,27 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- LCP: precargar el logo del Hero -->
-    <link rel="preload" href="/logo.svg" as="image" type="image/svg+xml" fetchpriority="high" />
+    <link
+      rel="preload"
+      href="/logo.svg"
+      as="image"
+      type="image/svg+xml"
+      fetchpriority="high"
+    />
 
-    <!-- SEO -->
-    <title>Catalina Coffee &amp; Snack | Café de Especialidad en Cochabamba</title>
+    <title>
+      Catalina Coffee &amp; Snack | Café de Especialidad en Cochabamba
+    </title>
     <meta
       name="description"
-      content="Café de origen boliviano, repostería horneada cada mañana y snacks artesanales en Cochabamba. Explora nuestro menú y haz tu pedido por WhatsApp."
+      content="Catalina Coffee &amp; Snack: Café de especialidad, repostería artesanal y promociones en Cochabamba. Consulta nuestro menú digital y pide por WhatsApp."
     />
     <meta name="theme-color" content="#81542b" />
-    <meta name="author" content="Catalina Coffee & Snack" />
+    <meta name="author" content="Catalina Coffee &amp; Snack" />
     <meta name="robots" content="index, follow" />
 
-    <!-- OpenGraph (WhatsApp / redes sociales) -->
-    <!-- IMPORTANTE: reemplaza TU-DOMINIO.com por tu dominio real en producción -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Catalina Coffee & Snack" />
+    <meta property="og:site_name" content="Catalina Coffee &amp; Snack" />
     <meta property="og:locale" content="es_BO" />
     <meta
       property="og:title"
@@ -35,10 +39,12 @@
       property="og:image"
       content="https://TU-DOMINIO.com/Catalina_cup.png"
     />
-    <meta property="og:image:alt" content="Café de Catalina Coffee & Snack" />
+    <meta
+      property="og:image:alt"
+      content="Café de Catalina Coffee &amp; Snack"
+    />
     <meta property="og:url" content="https://TU-DOMINIO.com/" />
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
@@ -53,9 +59,29 @@
       content="https://TU-DOMINIO.com/Catalina_cup.png"
     />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Karla:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Karla:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "CafeOrCoffeeShop",
+        "name": "Catalina Coffee & Snack",
+        "image": "https://TU-DOMINIO.com/Catalina_cup.png",
+        "description": "Café de especialidad, repostería artesanal y snacks en Cochabamba.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Cochabamba",
+          "addressCountry": "BO"
+        },
+        "servesCuisine": ["Café", "Repostería", "Snacks"],
+        "priceRange": "$$"
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

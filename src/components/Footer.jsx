@@ -64,7 +64,7 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
   ];
 
   return (
-    <footer className="relative bg-[#1c1c18] text-[#fdf9f2]">
+    <footer className="relative w-full shrink-0 bg-[#1c1c18] text-[#fdf9f2]">
       {/* Hilo cálido superior */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-[#c18c5d]/50 to-transparent" />
 
@@ -80,6 +80,7 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
               logoUrl="/logo_white.svg"
               size="footer"
               onClick={scrollTop}
+              ariaLabel="Volver al inicio"
             />
             <p className="text-xs sm:text-sm text-[#c9bfb0] leading-relaxed max-w-sm">
               Café de origen boliviano, repostería horneada cada mañana y el

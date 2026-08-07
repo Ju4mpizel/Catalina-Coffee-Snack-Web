@@ -6,6 +6,7 @@ export default function BrandLogo({
   onClick,
   fetchPriority = "auto",
   decoding = "async",
+  ariaLabel = "Catalina Coffee & Snack",
 }) {
   const [imgError, setImgError] = useState(false);
 
@@ -22,6 +23,7 @@ export default function BrandLogo({
     <button
       type="button"
       onClick={onClick}
+      aria-label={ariaLabel}
       className="flex items-center cursor-pointer group select-none py-1 bg-transparent border-none p-0"
     >
       {!imgError ? (

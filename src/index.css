@@ -90,20 +90,13 @@
   animation: marquee 35s linear infinite;
   will-change: transform;
 }
-/* Sistema de aparición progresiva de secciones (fade + scale al hacer scroll).
-   SIN translateY: un desplazamiento vertical en la sección final jalaba la
-   página ~1cm hacia arriba al revelarse sobre el footer. El scale NO mueve la
-   posición en el flujo (no empuja ni jala nada) y se compone por GPU.
-   El IntersectionObserver en App.jsx añade `.is-visible` cuando la sección
-   entra. Las cascadas usan `transition-delay` inline por elemento. */
+/* Sistema de aparición progresiva de secciones.
+   Utiliza únicamente opacity y transform: translateY para evitar alteraciones de layout.
+   will-change asegura la composición por GPU. */
 [data-reveal] {
   opacity: 0;
-  transform: scale(0.97);
-  /* Anclado arriba: con el origen por defecto (centro), el borde superior de la
-     sección sube ~1.5% al revelarse y, en la sección final, eso jala la página
-     hacia arriba sobre el footer. Con origen arriba, el scale crece hacia abajo
-     y el borde superior permanece fijo (sin tirón). La animación no cambia. */
-  transform-origin: center top;
+  transform: translateY(20px);
+  will-change: opacity, transform;
   transition:
     opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -111,7 +104,7 @@
 
 [data-reveal].is-visible {
   opacity: 1;
-  transform: scale(1);
+  transform: translateY(0);
 }
 
 /* 4. Estilos base globales */
