@@ -4,7 +4,7 @@
       "id": "1",
       "nombre": "Combo Mañanero",
       "categoria": "Ofertas Catalina",
-      "precio": 32,
+      "precio": 30,
       "precioAntes": 40,
       "descripcion": "Cappuccino Artesanal + Croissant de Almendras. (Ahorras Bs. 8)",
       "imagen": "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800",
@@ -62,7 +62,7 @@
       "imagen": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800",
       "destacadoPinterest": "SÍ",
       "destacado": true,
-      "formatoPinterest": "largo",
+      "formatoPinterest": "cuadrado",
       "esOferta": false
     },
     {
@@ -75,7 +75,7 @@
       "imagen": "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=800",
       "destacadoPinterest": "SÍ",
       "destacado": true,
-      "formatoPinterest": "largo",
+      "formatoPinterest": "cuadrado",
       "esOferta": false
     },
     {
@@ -88,7 +88,7 @@
       "imagen": "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800",
       "destacadoPinterest": "SÍ",
       "destacado": true,
-      "formatoPinterest": "largo",
+      "formatoPinterest": "cuadrado",
       "esOferta": false
     },
     {
@@ -101,7 +101,7 @@
       "imagen": "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800",
       "destacadoPinterest": "SÍ",
       "destacado": true,
-      "formatoPinterest": "largo",
+      "formatoPinterest": "cuadrado",
       "esOferta": false
     }
   ],
@@ -112,7 +112,7 @@
       "descuento": "Oferta",
       "descripcion": "Cappuccino Artesanal + Croissant de Almendras. (Ahorras Bs. 8)",
       "precioAntes": 40,
-      "precioOferta": 32,
+      "precioOferta": 30,
       "imagen": "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800",
       "valido": "Disponible Hoy"
     },

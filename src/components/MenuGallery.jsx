@@ -1,4 +1,5 @@
 // src/components/MenuGallery.jsx
+import { m, AnimatePresence } from "framer-motion";
 import { Sparkles } from "lucide-react";
 
 // URL de imagen de respaldo por defecto si el enlace en Sheets está roto
@@ -49,51 +50,60 @@ export default function MenuGallery({ items, onItemClick }) {
         </p>
       ) : (
         <div className="columns-2 lg:columns-3 gap-3 sm:gap-6 space-y-3 sm:space-y-6">
-          {featuredItems.map((item, index) => {
-            const aspectClass =
-              formatMap[item.formatoPinterest] || "aspect-square";
+          <AnimatePresence mode="popLayout">
+            {featuredItems.map((item, index) => {
+              const aspectClass =
+                formatMap[item.formatoPinterest] || "aspect-square";
 
-            return (
-              <article
-                key={item.id}
-                role="button"
-                tabIndex={0}
-                data-reveal
-                style={{ transitionDelay: `${Math.min(index, 8) * 60}ms` }}
-                onClick={() => onItemClick?.(item)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    onItemClick?.(item);
-                  }
-                }}
-                className={`relative group cursor-pointer break-inside-avoid w-full mb-3 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl bg-[#f1ede6] border border-[#d5c3b7]/40 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 active:scale-[0.98] ${aspectClass}`}
-              >
-                <img
-                  src={item.imagen}
-                  alt={item.nombre}
-                  onError={handleImageError}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover rounded-2xl sm:rounded-3xl group-hover:scale-105 transition-transform duration-700 ease-out bg-[#f1ede6]"
-                />
+              return (
+                <m.div
+                  key={`${item.id}-${item.formatoPinterest}`}
+                  layout
+                  role="button"
+                  tabIndex={0}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{
+                    duration: 0.35,
+                    ease: "easeOut",
+                    delay: Math.min(index, 8) * 0.06,
+                  }}
+                  onClick={() => onItemClick?.(item)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      onItemClick?.(item);
+                    }
+                  }}
+                  className={`relative group cursor-pointer break-inside-avoid w-full mb-3 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl bg-[#f1ede6] border border-[#d5c3b7]/40 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 active:scale-[0.98] ${aspectClass}`}
+                >
+                  <img
+                    src={item.imagen}
+                    alt={item.nombre}
+                    onError={handleImageError}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover rounded-2xl sm:rounded-3xl group-hover:scale-105 transition-transform duration-700 ease-out bg-[#f1ede6]"
+                  />
 
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-2.5 sm:px-5 pt-8 sm:pt-14 pb-2.5 sm:pb-5">
-                  <span className="block text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-[#f6bb88] mb-0.5 sm:mb-1">
-                    {item.categoria}
-                  </span>
-                  <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-0.5 sm:gap-3">
-                    <h3 className="font-serif text-xs sm:text-xl text-white leading-tight line-clamp-2">
-                      {item.nombre}
-                    </h3>
-                    <span className="shrink-0 font-sans font-bold text-xs sm:text-base text-[#f6bb88]">
-                      Bs. {item.precio}
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-2.5 sm:px-5 pt-8 sm:pt-14 pb-2.5 sm:pb-5">
+                    <span className="block text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-[#f6bb88] mb-0.5 sm:mb-1">
+                      {item.categoria}
                     </span>
+                    <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-0.5 sm:gap-3">
+                      <h3 className="font-serif text-xs sm:text-xl text-white leading-tight line-clamp-2">
+                        {item.nombre}
+                      </h3>
+                      <span className="shrink-0 font-sans font-bold text-xs sm:text-base text-[#f6bb88]">
+                        Bs. {item.precio}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </article>
-            );
-          })}
+                </m.div>
+              );
+            })}
+          </AnimatePresence>
         </div>
       )}
     </section>
