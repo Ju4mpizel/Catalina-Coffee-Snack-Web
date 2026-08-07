@@ -71,7 +71,7 @@ export default function Testimonials() {
       </div>
 
       <div className="max-w-2xl mx-auto relative">
-        <div className="relative min-h-[200px] flex items-center justify-center">
+        <div className="relative h-[300px] sm:h-[280px]">
           <AnimatePresence mode="wait" custom={direction}>
             <m.div
               key={current}
@@ -81,20 +81,22 @@ export default function Testimonials() {
               animate="center"
               exit="exit"
               transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-              className="bg-white rounded-3xl p-8 md:p-10 shadow-md border border-[#d5c3b7]/40 text-center w-full"
+              className="absolute inset-0 bg-white rounded-3xl shadow-md border border-[#d5c3b7]/40 overflow-hidden"
             >
-              <Quote className="w-8 h-8 text-[#81542b]/20 mx-auto mb-4" />
-              <p className="font-serif text-lg md:text-xl text-[#1c1c18] leading-relaxed mb-6 italic">
-                &ldquo;{t.text}&rdquo;
-              </p>
-              <div className="flex items-center justify-center gap-1 text-[#f6bb88] mb-3">
-                {[...Array(t.rating)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-current" />
-                ))}
+              <div className="h-full flex flex-col items-center justify-center p-8 md:p-10 text-center">
+                <Quote className="w-8 h-8 text-[#81542b]/20 mx-auto mb-4 shrink-0" />
+                <p className="font-serif text-lg md:text-xl text-[#1c1c18] leading-relaxed mb-6 italic line-clamp-2">
+                  &ldquo;{t.text}&rdquo;
+                </p>
+                <div className="flex items-center justify-center gap-1 text-[#f6bb88] mb-3 shrink-0">
+                  {[...Array(t.rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-current" />
+                  ))}
+                </div>
+                <span className="font-sans text-sm font-semibold text-[#81542b] shrink-0">
+                  {t.name}
+                </span>
               </div>
-              <span className="font-sans text-sm font-semibold text-[#81542b]">
-                {t.name}
-              </span>
             </m.div>
           </AnimatePresence>
         </div>
