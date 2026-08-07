@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
 import { getWhatsappUrl } from "../config/site";
 
 const FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800";
+  "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600&q=75&auto=format";
 
 export default function OffersCarousel({ ofertas }) {
   const [currentIndex, setCurrentIndex] = useState(0);

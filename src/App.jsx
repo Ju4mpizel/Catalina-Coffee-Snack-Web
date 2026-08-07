@@ -13,7 +13,6 @@ import MenuCatalog from "./components/MenuCatalog";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsappButton";
 import { fetchMenuData, getInitialMenuData } from "./services/menuService";
-import { AnimatePresence, m } from "framer-motion";
 
 export default function App() {
   const [currentView, setCurrentView] = useState("inicio");
@@ -24,7 +23,6 @@ export default function App() {
   const initialData = getInitialMenuData();
   const [menuItems, setMenuItems] = useState(initialData.menu);
   const [ofertasItems, setOfertasItems] = useState(initialData.ofertas);
-  const isLoading = false;
 
   // Revalidación silenciosa en segundo plano al montar la app
   useEffect(() => {
@@ -73,7 +71,7 @@ export default function App() {
     );
     revealEls.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [currentView, isLoading]);
+  }, [currentView]);
 
   const handleItemClickFromGallery = (item) => {
     setSelectedCategory(item.categoria);
@@ -137,40 +135,6 @@ export default function App() {
 
       {/* Botón flotante de WhatsApp siempre visible */}
       <WhatsAppButton />
-
-      {/* Overlay de Loader (se desvanece si isLoading es true) */}
-      <AnimatePresence>
-        {isLoading && (
-          <m.div
-            key="loader"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            className="fixed inset-0 z-[100] bg-[#fdf9f2] flex flex-col items-center justify-center gap-7 px-6"
-          >
-            <img
-              src="/logo.svg"
-              alt="Catalina Coffee & Snack"
-              className="h-16 w-auto object-contain animate-pulse"
-              decoding="async"
-            />
-
-            <div className="relative w-10 h-10" aria-hidden="true">
-              <div className="absolute inset-0 rounded-full border-2 border-[#81542b]/15" />
-              <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#81542b] animate-spin" />
-            </div>
-
-            <div className="text-center space-y-2.5">
-              <p className="font-serif text-xl text-[#1c1c18]">
-                Preparando la experiencia...
-              </p>
-              <p className="text-xs text-[#81542b]/70 tracking-widest uppercase font-medium">
-                Catalina Coffee &amp; Snack
-              </p>
-            </div>
-          </m.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

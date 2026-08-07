@@ -81,6 +81,7 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
               size="footer"
               onClick={scrollTop}
               ariaLabel="Volver al inicio"
+              loading="lazy"
             />
             <p className="text-xs sm:text-sm text-[#c9bfb0] leading-relaxed max-w-sm">
               Café de origen boliviano, repostería horneada cada mañana y el
@@ -155,7 +156,7 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Seguir en ${social.label}`}
-                      className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-[#fdf9f2] hover:bg-[#c18c5d] hover:text-[#1c1c18] hover:border-transparent hover:-translate-y-0.5 active:scale-95 transition-all duration-200"
+                      className="w-11 h-11 sm:w-10 sm:h-10 rounded-full border border-white/15 bg-white/5 flex items-center justify-center text-[#fdf9f2] hover:bg-[#c18c5d] hover:text-[#1c1c18] hover:border-transparent hover:-translate-y-0.5 active:scale-95 transition-all duration-200"
                     >
                       {social.icon}
                     </a>

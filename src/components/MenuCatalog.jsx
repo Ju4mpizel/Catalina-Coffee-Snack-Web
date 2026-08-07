@@ -2,7 +2,7 @@ import { m, AnimatePresence } from "framer-motion";
 import { Tag } from "lucide-react";
 
 const FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800";
+  "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600&q=75&auto=format";
 
 export default function MenuCatalog({
   items,
@@ -119,6 +119,7 @@ export default function MenuCatalog({
                   onError={handleImageError}
                   className="w-24 h-24 sm:w-28 sm:h-28 rounded-xl object-cover bg-[#f1ede6]"
                   loading="lazy"
+                  decoding="async"
                 />
                 {item.esOferta && (
                   <span className="absolute top-1 left-1 bg-[#81542b] text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">

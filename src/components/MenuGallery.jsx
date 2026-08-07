@@ -3,7 +3,7 @@ import { Sparkles } from "lucide-react";
 
 // URL de imagen de respaldo por defecto si el enlace en Sheets está roto
 const FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800";
+  "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600&q=75&auto=format";
 
 export default function MenuGallery({ items, onItemClick }) {
   // Guard defensivo (items || []) + filtro normalizado

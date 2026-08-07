@@ -5,6 +5,7 @@ export default function BrandLogo({
   size = "md",
   onClick,
   fetchPriority = "auto",
+  loading = "eager",
   decoding = "async",
   ariaLabel = "Catalina Coffee & Snack",
 }) {
@@ -31,6 +32,7 @@ export default function BrandLogo({
           src={logoUrl}
           alt="Catalina Coffee & Snack"
           fetchPriority={fetchPriority}
+          loading={loading}
           decoding={decoding}
           onError={() => setImgError(true)}
           className={`${dimensions} w-auto object-contain transition-transform duration-300 group-hover:scale-105`}

@@ -8,7 +8,7 @@ export const mockOfertas = [
     precioAntes: 40,
     precioOferta: 32,
     imagen:
-      "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800",
+      "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600&q=75&auto=format",
     valido: "Lunes a Viernes (08:30 - 11:00)",
   },
   {
@@ -20,7 +20,7 @@ export const mockOfertas = [
     precioAntes: 49,
     precioOferta: 39,
     imagen:
-      "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800",
+      "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&q=75&auto=format",
     valido: "Todos los días (15:00 - 18:00)",
   },
   {
@@ -32,7 +32,7 @@ export const mockOfertas = [
     precioAntes: 44,
     precioOferta: 34,
     imagen:
-      "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=800",
+      "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=600&q=75&auto=format",
     valido: "Sábados y Domingos",
   },
 ];
@@ -48,7 +48,7 @@ export const mockMenu = [
     descripcion:
       "Cappuccino Artesanal + Croissant de Almendras. (Ahorras Bs. 8)",
     imagen:
-      "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800",
+      "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600&q=75&auto=format",
     destacadoPinterest: "NO",
     esOferta: true,
   },
@@ -60,7 +60,7 @@ export const mockMenu = [
     precioAntes: 49,
     descripcion: "Tostado Moka & Queso + Iced Caramel Latte. (Ahorras Bs. 10)",
     imagen:
-      "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800",
+      "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&q=75&auto=format",
     destacadoPinterest: "NO",
     esOferta: true,
   },
@@ -72,7 +72,7 @@ export const mockMenu = [
     precioAntes: 44,
     descripcion: "Café de origen + Muffin de Arándanos a mitad de precio.",
     imagen:
-      "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=800",
+      "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=600&q=75&auto=format",
     destacadoPinterest: "NO",
     esOferta: true,
   },
@@ -86,7 +86,7 @@ export const mockMenu = [
     descripcion:
       "Espresso doble con leche texturizada al vapor y fino arte latte.",
     imagen:
-      "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800",
+      "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600&q=75&auto=format",
     destacadoPinterest: "SÍ",
     formatoPinterest: "largo",
   },
@@ -97,7 +97,7 @@ export const mockMenu = [
     precio: 18,
     descripcion:
       "Hojaldre artesanal horneado diariamente con crema pastelera de almendras.",
-    imagen: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800",
+    imagen: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=600&q=75&auto=format",
     destacadoPinterest: "SÍ",
     formatoPinterest: "cuadrado",
   },
@@ -109,7 +109,7 @@ export const mockMenu = [
     descripcion:
       "Pan masa madre tostado a la plancha con mantequilla artesanal y queso fundido.",
     imagen:
-      "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800",
+      "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&q=75&auto=format",
     destacadoPinterest: "SÍ",
     formatoPinterest: "largo",
   },
@@ -121,7 +121,7 @@ export const mockMenu = [
     descripcion:
       "Esponjoso muffin con arándanos frescos orgánicos y crumble crujiente.",
     imagen:
-      "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=800",
+      "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=600&q=75&auto=format",
     destacadoPinterest: "SÍ", // <-- AHORA TAMBIÉN APARECE EN PINTEREST
     formatoPinterest: "cuadrado",
   },
@@ -133,7 +133,7 @@ export const mockMenu = [
     descripcion:
       "Extracción limpia de granos seleccionados con notas a chocolate y miel.",
     imagen:
-      "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800",
+      "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=600&q=75&auto=format",
     destacadoPinterest: "SÍ",
     formatoPinterest: "cuadrado",
   },
@@ -145,7 +145,7 @@ export const mockMenu = [
     descripcion:
       "Café frío con jarabe de caramelo artesanal, leche y hielo de espresso.",
     imagen:
-      "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800",
+      "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&q=75&auto=format",
     destacadoPinterest: "SÍ",
     formatoPinterest: "largo",
   },
@@ -157,7 +157,7 @@ export const mockMenu = [
     descripcion:
       "Manzanas caramelizadas al horno sobre una fina base de hojaldre crujiente.",
     imagen:
-      "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=800",
+      "https://images.unsplash.com/photo-1568571780765-9276ac8b75a2?w=600&q=75&auto=format",
     destacadoPinterest: "SÍ",
     formatoPinterest: "cuadrado",
   },
@@ -169,7 +169,7 @@ export const mockMenu = [
     descripcion:
       "Maceración en frío durante 18 horas, refrescante, dulce y bajo en acidez.",
     imagen:
-      "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=800",
+      "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600&q=75&auto=format",
     destacadoPinterest: "SÍ",
     formatoPinterest: "largo",
   },

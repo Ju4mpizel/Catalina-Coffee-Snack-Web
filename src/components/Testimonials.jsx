@@ -103,7 +103,7 @@ export default function Testimonials() {
           <button
             type="button"
             onClick={prev}
-            className="w-9 h-9 rounded-full bg-white border border-[#d5c3b7]/50 flex items-center justify-center text-[#51443b] hover:bg-[#81542b] hover:text-white transition-colors duration-200 shadow-xs cursor-pointer active:scale-90"
+            className="w-11 h-11 rounded-full bg-white border border-[#d5c3b7]/50 flex items-center justify-center text-[#51443b] hover:bg-[#81542b] hover:text-white transition-colors duration-200 shadow-xs cursor-pointer active:scale-90"
             aria-label="Anterior"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -126,7 +126,7 @@ export default function Testimonials() {
           <button
             type="button"
             onClick={next}
-            className="w-9 h-9 rounded-full bg-white border border-[#d5c3b7]/50 flex items-center justify-center text-[#51443b] hover:bg-[#81542b] hover:text-white transition-colors duration-200 shadow-xs cursor-pointer active:scale-90"
+            className="w-11 h-11 rounded-full bg-white border border-[#d5c3b7]/50 flex items-center justify-center text-[#51443b] hover:bg-[#81542b] hover:text-white transition-colors duration-200 shadow-xs cursor-pointer active:scale-90"
             aria-label="Siguiente"
           >
             <ChevronRight className="w-4 h-4" />

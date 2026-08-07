@@ -68,6 +68,8 @@ export default function Hero({ onExploreMenu }) {
                 alt="Vaso Catalina Coffee"
                 className="w-full h-auto object-contain drop-shadow-2xl animate-float"
                 loading="eager"
+                fetchPriority="high"
+                decoding="async"
               />
             </div>
           </div>

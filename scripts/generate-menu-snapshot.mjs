@@ -79,7 +79,7 @@ async function fetchFromSheet() {
         descripcion: c[5]?.v || "",
         imagen:
           c[6]?.v ||
-          "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800",
+          "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600&q=75&auto=format",
         destacadoPinterest: esDestacado ? "SÍ" : "NO",
         destacado: esDestacado,
         formatoPinterest:
