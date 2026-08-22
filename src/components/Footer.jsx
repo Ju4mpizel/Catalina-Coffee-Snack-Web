@@ -1,11 +1,4 @@
-import {
-  MessageCircle,
-  MapPin,
-  Clock,
-  Coffee,
-  Leaf,
-  Heart,
-} from "lucide-react";
+import { MessageCircle, MapPin, Clock, Heart } from "lucide-react";
 import BrandLogo from "./BrandLogo";
 import { getWhatsappUrl } from "../config/site";
 
@@ -83,20 +76,6 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
               ariaLabel="Volver al inicio"
               loading="lazy"
             />
-            <p className="text-xs sm:text-sm text-[#c9bfb0] leading-relaxed max-w-sm">
-              Café de origen boliviano, repostería horneada cada mañana y el
-              rincón perfecto en Cochabamba para hacer una pausa.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-[#f6bb88] px-3 py-1 rounded-full border border-[#c18c5d]/30 bg-[#c18c5d]/10">
-                <Coffee className="w-3 h-3" />
-                Café de origen
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-[#f6bb88] px-3 py-1 rounded-full border border-[#c18c5d]/30 bg-[#c18c5d]/10">
-                <Leaf className="w-3 h-3" />
-                Horneado diario
-              </span>
-            </div>
           </div>
 
           {/* Navegación */}

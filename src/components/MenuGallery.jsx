@@ -1,6 +1,6 @@
 // src/components/MenuGallery.jsx
 import { m, AnimatePresence } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { ArrowUpRight, MousePointerClick, Sparkles } from "lucide-react";
 
 // URL de imagen de respaldo por defecto si el enlace en Sheets está roto
 const FALLBACK_IMAGE =
@@ -39,8 +39,14 @@ export default function MenuGallery({ items, onItemClick }) {
           Mural de Sabores
         </h2>
         <p className="font-sans text-xs sm:text-sm text-[#51443b] max-w-md mx-auto">
-          Una galería de nuestros favoritos. Haz clic en cualquier foto para ir
-          directo a su posición en el menú.
+          Una galería de nuestros favoritos del menú.
+        </p>
+        <p className="font-sans text-[11px] sm:text-xs text-[#7c5730] mt-1.5 max-w-md mx-auto inline-flex items-center gap-1.5">
+          <MousePointerClick
+            className="w-3.5 h-3.5 shrink-0 text-[#81542b]"
+            aria-hidden="true"
+          />
+          Toca cualquier foto para localizarla y ver sus detalles en el menú.
         </p>
       </div>
 
@@ -75,7 +81,8 @@ export default function MenuGallery({ items, onItemClick }) {
                       onItemClick?.(item);
                     }
                   }}
-                  className={`relative group cursor-pointer break-inside-avoid w-full mb-3 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl bg-[#f1ede6] border border-[#d5c3b7]/40 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-shadow duration-300 active:scale-[0.98] ${aspectClass}`}
+                  whileTap={{ scale: 0.97 }}
+                  className={`relative group cursor-pointer break-inside-avoid w-full mb-3 sm:mb-6 overflow-hidden rounded-2xl sm:rounded-3xl bg-[#f1ede6] border border-[#d5c3b7]/40 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-shadow transition-transform duration-300 active:scale-95 ${aspectClass}`}
                 >
                   <img
                     src={item.imagen}
@@ -85,6 +92,14 @@ export default function MenuGallery({ items, onItemClick }) {
                     decoding="async"
                     className="w-full h-full object-cover rounded-2xl sm:rounded-3xl group-hover:scale-105 transition-transform duration-700 ease-out bg-[#f1ede6]"
                   />
+
+                  <span className="absolute top-2.5 sm:top-4 right-2.5 sm:right-4 z-10 inline-flex items-center gap-1 bg-white/80 dark:bg-black/60 backdrop-blur-sm text-[#7c5730] text-xs font-medium px-2.5 py-1 rounded-full shadow-sm group-hover:bg-white transition-colors duration-200">
+                    Ver en menú
+                    <ArrowUpRight
+                      className="w-3.5 h-3.5 text-current"
+                      aria-hidden="true"
+                    />
+                  </span>
 
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-2.5 sm:px-5 pt-8 sm:pt-14 pb-2.5 sm:pb-5">
                     <span className="block text-[8px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-bold text-[#f6bb88] mb-0.5 sm:mb-1">

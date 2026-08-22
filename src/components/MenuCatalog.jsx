@@ -1,8 +1,77 @@
+import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import { Tag } from "lucide-react";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600&q=75&auto=format";
+
+// Descripción con soporte "Ver más / Ver menos" y apertura suave en móvil.
+// Mide la altura natural (scrollHeight) y la altura recortada (clientHeight)
+// de la misma etiqueta <p> para animar `height` entre ambos estados con framer-motion.
+function ExpandableDescription({ text }) {
+  const ref = useRef(null);
+  const expandedRef = useRef(false);
+  const [expanded, setExpanded] = useState(false);
+  const [truncated, setTruncated] = useState(false);
+  const [closedHeight, setClosedHeight] = useState(null);
+  const [openHeight, setOpenHeight] = useState(null);
+
+  useEffect(() => {
+    expandedRef.current = expanded;
+  }, [expanded]);
+
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const measure = () => {
+      const open = el.scrollHeight;
+      setOpenHeight(open);
+      // Solo capturamos la altura recortada mientras el texto está contraído.
+      if (!expandedRef.current) {
+        setClosedHeight(el.clientHeight);
+        setTruncated(open > el.clientHeight + 1);
+      }
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [text]);
+
+  const targetHeight = expanded ? openHeight : closedHeight;
+
+  return (
+    <div>
+      <m.div
+        initial={false}
+        animate={{ height: targetHeight || "auto" }}
+        transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+        className="overflow-hidden"
+      >
+        <p
+          ref={ref}
+          className={`text-xs sm:text-sm text-[#51443b] ${
+            expanded ? "" : "line-clamp-2"
+          }`}
+        >
+          {text}
+        </p>
+      </m.div>
+      {truncated && (
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+          className="mt-1.5 inline-flex items-center gap-0.5 text-xs font-semibold text-[#81542b] hover:text-[#5a3a1e] hover:underline underline-offset-2 cursor-pointer active:scale-95 transition-transform"
+        >
+          {expanded ? "Ver menos" : "Ver más"}
+        </button>
+      )}
+    </div>
+  );
+}
 
 export default function MenuCatalog({
   items,
@@ -146,9 +215,7 @@ export default function MenuCatalog({
                       </span>
                     </div>
                   </div>
-                  <p className="text-xs sm:text-sm text-[#51443b] line-clamp-2">
-                    {item.descripcion}
-                  </p>
+                  <ExpandableDescription text={item.descripcion} />
                 </div>
 
                 <span className="text-[10px] font-semibold text-[#7c5730] uppercase tracking-wider mt-2">
