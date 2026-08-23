@@ -70,7 +70,7 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
           {/* Marca */}
           <div className="sm:col-span-2 lg:col-span-1 flex flex-col items-start gap-5">
             <BrandLogo
-              logoUrl="/logo_white.svg"
+              logoUrl="/Catalina_Logo_nuevo_white.svg"
               size="footer"
               onClick={scrollTop}
               ariaLabel="Volver al inicio"

@@ -1,5 +1,5 @@
 import { ArrowDown } from "lucide-react";
-import catalinaCupImg from "../assets/Catalina_cup.webp";
+import catalinaCupImg from "../assets/Catalina_cup_nuevo.webp";
 
 export default function Hero({ onExploreMenu }) {
   return (

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function BrandLogo({
-  logoUrl = "/logo.svg",
+  logoUrl = "/Catalina_Logo_nuevo.svg",
   size = "md",
   onClick,
   fetchPriority = "auto",
@@ -11,13 +11,13 @@ export default function BrandLogo({
 }) {
   const [imgError, setImgError] = useState(false);
 
-  // Dimensiones ampliadas para que el logo destaque sin texto al lado
+  // Dimensiones equilibradas en navbar y footer
   const dimensions =
     {
-      sm: "h-10", // Móvil o espacios reducidos
-      md: "h-12 sm:h-14", // Navbar / Footer (compacto en pantallas intermedias)
-      lg: "h-20 sm:h-24", // Para el Footer o vistas destacadas
-      footer: "h-10 md:h-14", // Footer: compacto en móvil, estándar en desktop
+      sm: "h-12 sm:h-14", // Móvil o espacios reducidos
+      md: "h-14 sm:h-16", // Navbar: visible pero sin robar protagonismo
+      lg: "h-16 sm:h-20", // Para el Footer o vistas destacadas
+      footer: "h-14 md:h-20", // Footer: compacto en móvil, mediano en desktop
     }[size] || "h-14 sm:h-16";
 
   return (
@@ -25,7 +25,7 @@ export default function BrandLogo({
       type="button"
       onClick={onClick}
       aria-label={ariaLabel}
-      className="flex items-center cursor-pointer group select-none py-1 bg-transparent border-none p-0"
+      className="flex items-center cursor-pointer group select-none bg-transparent border-none p-0"
     >
       {!imgError ? (
         <img
