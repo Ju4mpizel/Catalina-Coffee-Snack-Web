@@ -1,4 +1,4 @@
-# REGLAS Y CONTEXTO DEL PROYECTO: CATALINA COFFEE & SNACK
+# REGLAS Y CONTEXTO DEL PROYECTO: CATALINA COFFEE
 
 ## 📌 Identidad de Marca y Tokens (Design System)
 
@@ -6,8 +6,8 @@
 - **Contenedores/Tarjetas:** `#f1ede6` y `#ece8e1`
 - **Texto Principal (Deep Roast):** `#1c1c18`
 - **Acento Primario (Caramelo):** `#81542b` / `#c18c5d`
-- **Fuente Serif (Títulos/Branding):** 'Libre Caslon Text', serif
-- **Fuente Sans (Cuerpo/Precios):** 'Plus Jakarta Sans', sans-serif
+- **Fuente Serif (Títulos/Branding):** 'Playfair Display SC', serif
+- **Fuente Sans (Cuerpo/Precios):** 'Karla', sans-serif
 
 ## 🛠️ Stack Técnico
 

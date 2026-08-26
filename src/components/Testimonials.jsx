@@ -80,7 +80,7 @@ export default function Testimonials() {
       </div>
 
       <div className="max-w-2xl mx-auto relative">
-        <div className="relative min-h-[300px] sm:min-h-[280px]">
+        <div className="relative h-[380px] sm:h-[340px] md:h-[320px] flex items-center">
           <AnimatePresence mode="wait" custom={direction}>
             <m.div
               key={current}
@@ -90,11 +90,11 @@ export default function Testimonials() {
               animate="center"
               exit="exit"
               transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-              className="absolute inset-0 bg-white rounded-3xl shadow-md border border-[#d5c3b7]/40 overflow-hidden"
+              className="w-full bg-white rounded-3xl shadow-md border border-[#d5c3b7]/40 overflow-hidden"
             >
-              <div className="h-full flex flex-col items-center justify-center p-6 md:p-10 text-center">
-                <Quote className="w-8 h-8 text-[#81542b]/20 mx-auto mb-4 shrink-0" />
-                <p className="font-serif text-lg md:text-xl text-[#1c1c18] leading-relaxed mb-6 italic">
+              <div className="flex flex-col items-center justify-center px-6 py-6 sm:py-8 md:px-10 text-center">
+                <Quote className="w-8 h-8 text-[#81542b]/20 mx-auto mb-3 shrink-0" />
+                <p className="font-serif text-base sm:text-lg md:text-xl text-[#1c1c18] leading-relaxed mb-5 italic">
                   &ldquo;{t.text}&rdquo;
                 </p>
                 <div className="flex items-center justify-center gap-1 text-[#f6bb88] mb-3 shrink-0">

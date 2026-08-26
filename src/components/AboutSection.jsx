@@ -1,3 +1,23 @@
+import { Cake, Coffee, Sofa } from "lucide-react";
+
+const highlights = [
+  {
+    icon: Cake,
+    title: "Horneado a Diario",
+    description: "Postres y masitas frescas cada ma&ntilde;ana.",
+  },
+  {
+    icon: Coffee,
+    title: "Caf&eacute; Seleccionado",
+    description: "Tostado en su punto ideal para resaltar su mejor sabor.",
+  },
+  {
+    icon: Sofa,
+    title: "Ambiente C&aacute;lido",
+    description: "El rinc&oacute;n perfecto para relajarte en Cochabamba.",
+  },
+];
+
 export default function AboutSection() {
   return (
     <>
@@ -37,33 +57,6 @@ export default function AboutSection() {
                 Servimos caf&eacute; como quien sirve una pausa: despacio y con
                 intenci&oacute;n.
               </blockquote>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-10 pt-8 border-t border-[#d5c3b7]/40">
-                <div>
-                  <span className="font-serif text-xl font-bold text-[#81542b] block leading-snug">
-                    Horneado a Diario
-                  </span>
-                  <span className="text-sm text-[#51443b] font-medium mt-2 block leading-relaxed">
-                    Postres y masitas frescas cada ma&ntilde;ana.
-                  </span>
-                </div>
-                <div>
-                  <span className="font-serif text-xl font-bold text-[#81542b] block leading-snug">
-                    Caf&eacute; Seleccionado
-                  </span>
-                  <span className="text-sm text-[#51443b] font-medium mt-2 block leading-relaxed">
-                    Tostado en su punto ideal para resaltar su mejor sabor.
-                  </span>
-                </div>
-                <div>
-                  <span className="font-serif text-xl font-bold text-[#81542b] block leading-snug">
-                    Ambiente C&aacute;lido
-                  </span>
-                  <span className="text-sm text-[#51443b] font-medium mt-2 block leading-relaxed">
-                    El rinc&oacute;n perfecto para relajarte en Cochabamba.
-                  </span>
-                </div>
-              </div>
             </div>
 
             <figure
@@ -86,6 +79,30 @@ export default function AboutSection() {
                 La barra de Catalina, cada ma&ntilde;ana.
               </figcaption>
             </figure>
+          </div>
+
+          <div
+            data-reveal
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10 sm:mt-14"
+          >
+            {highlights.map((item) => (
+              <div
+                key={item.title}
+                className="bg-[#f1ede6] border border-[#d5c3b7]/40 rounded-2xl p-5 flex items-start gap-4"
+              >
+                <span className="w-11 h-11 rounded-xl bg-[#81542b]/10 flex items-center justify-center shrink-0">
+                  <item.icon className="w-5 h-5 text-[#81542b]" />
+                </span>
+                <div className="min-w-0">
+                  <span className="block font-serif text-lg sm:text-xl font-bold text-[#81542b] leading-snug">
+                    {item.title}
+                  </span>
+                  <span className="block text-sm text-[#51443b] font-medium leading-relaxed mt-1">
+                    {item.description}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

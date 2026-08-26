@@ -1,6 +1,6 @@
 import { MessageCircle, MapPin, Clock, Heart } from "lucide-react";
 import BrandLogo from "./BrandLogo";
-import { getWhatsappUrl } from "../config/site";
+import { getWhatsappUrl, BUSINESS_INFO } from "../config/site";
 
 const WHATSAPP_URL = getWhatsappUrl();
 const TIKTOK_URL = "https://www.tiktok.com/@catalina.coffee0";
@@ -106,14 +106,16 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
             <ul className="space-y-3 text-xs sm:text-sm">
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-[#c18c5d] shrink-0 mt-0.5" />
-                <span className="text-[#c9bfb0]">Cochabamba, Bolivia</span>
+                <span className="text-[#c9bfb0]">
+                  {BUSINESS_INFO.address}, {BUSINESS_INFO.city}
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Clock className="w-4 h-4 text-[#c18c5d] shrink-0 mt-0.5" />
                 <div className="text-[#c9bfb0]">
-                  <p>Lunes a Sábado</p>
+                  <p>{BUSINESS_INFO.scheduleDays}</p>
                   <p className="text-[#fdf9f2] font-semibold tabular-nums">
-                    08:30 &ndash; 20:30
+                    {BUSINESS_INFO.scheduleHours}
                   </p>
                 </div>
               </li>

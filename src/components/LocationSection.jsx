@@ -1,11 +1,10 @@
 import { MapPin, Clock, Navigation, MessageCircle } from "lucide-react";
-import { getWhatsappUrl } from "../config/site";
+import { getWhatsappUrl, BUSINESS_INFO } from "../config/site";
 
 const whatsappUrl = getWhatsappUrl(
   "Hola Catalina Coffee, quisiera una consulta",
 );
-const directionsUrl =
-  "https://www.google.com/maps/dir/?api=1&destination=Cochabamba%2C+Bolivia";
+const directionsUrl = BUSINESS_INFO.mapsDirectionsUrl;
 
 export default function LocationSection() {
   return (
@@ -31,7 +30,7 @@ export default function LocationSection() {
                       Direcci&oacute;n
                     </h3>
                     <p className="text-sm text-[#51443b] mb-4">
-                      Cochabamba, Bolivia
+                      {BUSINESS_INFO.address}, {BUSINESS_INFO.city}
                     </p>
                     <a
                       href={directionsUrl}
@@ -58,11 +57,11 @@ export default function LocationSection() {
                     <dl className="space-y-2 mb-5">
                       <div className="flex items-baseline gap-2 text-sm">
                         <dt className="text-[#1c1c18] font-medium">
-                          Lunes a S&aacute;bado
+                          {BUSINESS_INFO.scheduleDays}
                         </dt>
                         <dd className="flex-1 border-b border-dotted border-[#81542b]/40 mb-1" />
                         <dd className="text-[#51443b] tabular-nums">
-                          08:30 &ndash; 20:30
+                          {BUSINESS_INFO.scheduleHours}
                         </dd>
                       </div>
                     </dl>
@@ -84,7 +83,7 @@ export default function LocationSection() {
               <div className="aspect-video rounded-2xl overflow-hidden border border-[#d5c3b7]/40">
                 <iframe
                   title="Mapa de ubicaci&oacute;n de Catalina"
-                  src="https://maps.google.com/maps?q=Cochabamba%20Bolivia&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                  src={BUSINESS_INFO.mapsEmbedUrl}
                   className="w-full h-full border-0"
                   allowFullScreen=""
                   loading="lazy"

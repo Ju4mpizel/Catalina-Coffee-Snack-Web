@@ -183,13 +183,17 @@ export default function OffersCarousel({ ofertas }) {
                 key={index}
                 type="button"
                 onClick={() => goTo(index)}
-                className={`rounded-full transition-all cursor-pointer ${
-                  index === currentIndex
-                    ? "bg-[#81542b] w-6 h-2.5"
-                    : "bg-[#d5c3b7] hover:bg-[#81542b]/50 w-2.5 h-2.5"
-                }`}
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer active:scale-90 transition-transform"
                 aria-label={`Ir a oferta ${index + 1}`}
-              />
+              >
+                <span
+                  className={`block rounded-full transition-all duration-300 ${
+                    index === currentIndex
+                      ? "bg-[#81542b] w-6 h-2.5"
+                      : "bg-[#d5c3b7] hover:bg-[#81542b]/50 w-2.5 h-2.5"
+                  }`}
+                />
+              </button>
             ))}
           </div>
         </div>

@@ -109,6 +109,7 @@ export default function Navbar({
               isMobileMenuOpen ? "Cerrar Menú" : "Abrir Menú"
             }
             aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-nav-drawer"
             className={`lg:hidden p-3 rounded-xl text-[#1c1c18] hover:bg-[#f1ede6] active:scale-90 transition-all duration-300 cursor-pointer ${
               isMobileMenuOpen ? "rotate-90" : "rotate-0"
             }`}
@@ -124,6 +125,7 @@ export default function Navbar({
         {isMobileMenuOpen && (
           <m.div
             key="mobile-drawer"
+            id="mobile-nav-drawer"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
