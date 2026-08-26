@@ -1,7 +1,7 @@
 // src/config/site.js
 export const SITE_CONFIG = {
   // Reemplaza por el número real con código de país (ej. Bolivia: 5917XXXXXXXX)
-  whatsappNumber: import.meta.env.VITE_WHATSAPP_NUMBER || "59170000000",
+  whatsappNumber: import.meta.env.VITE_WHATSAPP_NUMBER || "59177411400",
   whatsappDefaultMessage:
     "¡Hola Catalina Coffee! Me gustaría hacer una consulta o pedido.",
 };

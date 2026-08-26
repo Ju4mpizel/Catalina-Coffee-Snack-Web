@@ -15,15 +15,21 @@ export default function Navbar({
   const closeMobile = () => setIsMobileMenuOpen(false);
 
   const handleHomeClick = () => {
-    onNavigateHome();
     closeMobile();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (currentView === "inicio") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      onNavigateHome();
+    }
   };
 
   const handleMenuClick = () => {
-    onNavigateMenu();
     closeMobile();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (currentView === "menu") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      onNavigateMenu();
+    }
   };
 
   const handleScrollTo = (sectionId) => {
@@ -82,7 +88,7 @@ export default function Navbar({
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-[#81542b] hover:text-white text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-full border border-[#81542b] hover:bg-[#81542b] transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+            className="flex items-center gap-1.5 text-[#81542b] hover:text-white text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-full border border-[#81542b] hover:bg-[#81542b] transition-all duration-200 hover:-translate-y-0.5 active:scale-95 min-h-11 sm:min-h-0"
           >
             <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
             <span>Contáctanos</span>
@@ -91,7 +97,7 @@ export default function Navbar({
           <button
             type="button"
             onClick={handleMenuClick}
-            className="flex items-center bg-[#81542b] hover:bg-[#6b4321] active:scale-95 text-white text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-full shadow-xs hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+            className="flex items-center bg-[#81542b] hover:bg-[#6b4321] active:scale-95 text-white text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-full shadow-xs hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer min-h-11 sm:min-h-0"
           >
             <span>Menú</span>
           </button>
@@ -103,7 +109,7 @@ export default function Navbar({
               isMobileMenuOpen ? "Cerrar Menú" : "Abrir Menú"
             }
             aria-expanded={isMobileMenuOpen}
-            className={`lg:hidden p-2 rounded-xl text-[#1c1c18] hover:bg-[#f1ede6] active:scale-90 transition-all duration-300 cursor-pointer ${
+            className={`lg:hidden p-3 rounded-xl text-[#1c1c18] hover:bg-[#f1ede6] active:scale-90 transition-all duration-300 cursor-pointer ${
               isMobileMenuOpen ? "rotate-90" : "rotate-0"
             }`}
           >

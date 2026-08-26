@@ -7,7 +7,7 @@ export default function BrandLogo({
   fetchPriority = "auto",
   loading = "eager",
   decoding = "async",
-  ariaLabel = "Catalina Coffee & Snack",
+  ariaLabel = "Catalina Coffee",
 }) {
   const [imgError, setImgError] = useState(false);
 
@@ -30,7 +30,7 @@ export default function BrandLogo({
       {!imgError ? (
         <img
           src={logoUrl}
-          alt="Catalina Coffee & Snack"
+          alt="Catalina Coffee"
           fetchPriority={fetchPriority}
           loading={loading}
           decoding={decoding}

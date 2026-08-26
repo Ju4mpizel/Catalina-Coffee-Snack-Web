@@ -10,17 +10,27 @@ export default function AboutSection() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div data-reveal>
               <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#81542b] block mb-4">
-                Nuestra historia
+                Nuestra esencia
               </span>
               <h2 className="font-serif text-3xl sm:text-5xl text-[#1c1c18] mb-8 leading-tight font-normal">
-                Caf&eacute; de especialidad con alma artesanal
+                Hecho con el Coraz&oacute;n
               </h2>
 
               <p className="font-sans text-[#51443b] leading-relaxed mb-8 first-letter:float-left first-letter:mr-3 first-letter:font-serif first-letter:font-bold first-letter:text-[#81542b] first-letter:text-6xl first-letter:leading-[0.75] first-letter:mt-1">
-                En Catalina creemos que tomar un caf&eacute; no es solo una
-                rutina: es una pausa en tu d&iacute;a. Seleccionamos granos
-                locales e insumos de la m&aacute;s alta calidad para prepararte
-                una experiencia memorable.
+                En Catalina Coffee creemos que los mejores momentos suceden
+                alrededor de una buena taza y algo dulce para acompa&ntilde;ar.
+                Somos una cafeter&iacute;a donde cada detalle importa: desde el
+                aroma del caf&eacute; reci&eacute;n preparado hasta la textura
+                de cada postre que sale de nuestro horno.
+              </p>
+
+              <p className="font-sans text-[#51443b] leading-relaxed mb-8">
+                Ponemos toda nuestra dedicaci&oacute;n en ofrecerte postres
+                frescos, masitas crujientes y opciones saladas elaboradas a
+                diario con ingredientes de calidad. Ya sea para charlar con
+                amigos, trabajar tranquilos o darte un gusto a media tarde,
+                nuestro espacio est&aacute; pensado para que te sientas como en
+                casa.
               </p>
 
               <blockquote className="font-serif italic text-xl sm:text-2xl text-[#7c5730] border-l-2 border-[#81542b]/40 pl-6 my-10">
@@ -28,21 +38,29 @@ export default function AboutSection() {
                 intenci&oacute;n.
               </blockquote>
 
-              <div className="grid grid-cols-2 gap-6 pt-6 border-t border-[#d5c3b7]/40">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-10 pt-8 border-t border-[#d5c3b7]/40">
                 <div>
-                  <span className="font-serif text-2xl font-bold text-[#81542b] block">
-                    100%
+                  <span className="font-serif text-xl font-bold text-[#81542b] block leading-snug">
+                    Horneado a Diario
                   </span>
-                  <span className="text-xs text-[#51443b] font-medium">
-                    Grano de selecci&oacute;n Bolivia
+                  <span className="text-sm text-[#51443b] font-medium mt-2 block leading-relaxed">
+                    Postres y masitas frescas cada ma&ntilde;ana.
                   </span>
                 </div>
                 <div>
-                  <span className="font-serif text-2xl font-bold text-[#81542b] block">
-                    Diario
+                  <span className="font-serif text-xl font-bold text-[#81542b] block leading-snug">
+                    Caf&eacute; Seleccionado
                   </span>
-                  <span className="text-xs text-[#51443b] font-medium">
-                    Horneado artesanal
+                  <span className="text-sm text-[#51443b] font-medium mt-2 block leading-relaxed">
+                    Tostado en su punto ideal para resaltar su mejor sabor.
+                  </span>
+                </div>
+                <div>
+                  <span className="font-serif text-xl font-bold text-[#81542b] block leading-snug">
+                    Ambiente C&aacute;lido
+                  </span>
+                  <span className="text-sm text-[#51443b] font-medium mt-2 block leading-relaxed">
+                    El rinc&oacute;n perfecto para relajarte en Cochabamba.
                   </span>
                 </div>
               </div>

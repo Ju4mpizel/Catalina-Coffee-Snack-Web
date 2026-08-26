@@ -3,7 +3,9 @@
 // o en las variables de entorno del dashboard de Vercel.
 
 const WHATSAPP_NUMBER =
-  import.meta.env.VITE_WHATSAPP_NUMBER || "59170000000";
+  import.meta.env.VITE_WHATSAPP_NUMBER || "59177411400";
+
+const SITE_URL = "https://catalinacoffeebolivia.com";
 
 const DEFAULT_MESSAGE =
   "Hola Catalina Coffee, quisiera hacer un pedido";
@@ -16,4 +18,12 @@ const DEFAULT_MESSAGE =
 export function getWhatsappUrl(message = DEFAULT_MESSAGE) {
   const cleanNumber = String(WHATSAPP_NUMBER).replace(/\D/g, "");
   return `https://wa.me/${cleanNumber}?text=${encodeURIComponent(message)}`;
+}
+
+/**
+ * URL base canónica del sitio en producción.
+ * @returns {string} https://catalinacoffeebolivia.com
+ */
+export function getSiteUrl() {
+  return SITE_URL;
 }

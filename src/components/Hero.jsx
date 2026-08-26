@@ -42,9 +42,9 @@ export default function Hero({ onExploreMenu }) {
               className="font-serif text-4xl sm:text-5xl md:text-6xl text-[#fdf9f2] font-normal tracking-wide leading-[1.15] mb-6 animate-hero-rise"
               style={{ animationDelay: "160ms" }}
             >
-              Un espacio donde cada detalle se siente{" "}
+              Creando experiencias{" "}
               <span className="italic text-[#f6bb88] block sm:inline">
-                hecho a mano
+                en cada momento
               </span>
             </h1>
 
@@ -53,8 +53,8 @@ export default function Hero({ onExploreMenu }) {
               className="font-sans text-base sm:text-lg text-[#e6d9c8] max-w-xl mx-auto md:mx-0 leading-relaxed mb-8 font-normal animate-hero-rise"
               style={{ animationDelay: "240ms" }}
             >
-              Café de origen cuidadosamente tostado, repostería horneada
-              diariamente y el ambiente perfecto para pausar tu día.
+              Café de origen tostado con esmero, repostería artesanal y un
+              lugar pensado para pausar y disfrutar de cada instante.
             </p>
 
             {/* Botón de Acción */}
@@ -83,6 +83,8 @@ export default function Hero({ onExploreMenu }) {
                 src={catalinaCupImg}
                 alt="Vaso Catalina Coffee"
                 className="w-full h-auto object-contain drop-shadow-2xl animate-float"
+                width="256"
+                height="256"
                 loading="eager"
                 fetchPriority="high"
                 decoding="async"

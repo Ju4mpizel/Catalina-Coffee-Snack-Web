@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState, useEffect } from "react";
+import { useLayoutEffect, useRef, useState, useEffect, useId } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import { Tag } from "lucide-react";
 
@@ -15,6 +15,7 @@ function ExpandableDescription({ text }) {
   const [truncated, setTruncated] = useState(false);
   const [closedHeight, setClosedHeight] = useState(null);
   const [openHeight, setOpenHeight] = useState(null);
+  const contentId = useId();
 
   useEffect(() => {
     expandedRef.current = expanded;
@@ -45,6 +46,7 @@ function ExpandableDescription({ text }) {
   return (
     <div>
       <m.div
+        id={contentId}
         initial={false}
         animate={{ height: targetHeight || "auto" }}
         transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
@@ -64,6 +66,7 @@ function ExpandableDescription({ text }) {
           type="button"
           onClick={() => setExpanded((v) => !v)}
           aria-expanded={expanded}
+          aria-controls={contentId}
           className="mt-1.5 inline-flex items-center gap-0.5 text-xs font-semibold text-[#81542b] hover:text-[#5a3a1e] hover:underline underline-offset-2 cursor-pointer active:scale-95 transition-transform"
         >
           {expanded ? "Ver menos" : "Ver más"}

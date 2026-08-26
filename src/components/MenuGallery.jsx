@@ -93,7 +93,7 @@ export default function MenuGallery({ items, onItemClick }) {
                     className="w-full h-full object-cover rounded-2xl sm:rounded-3xl group-hover:scale-105 transition-transform duration-700 ease-out bg-[#f1ede6]"
                   />
 
-                  <span className="absolute top-2.5 sm:top-4 right-2.5 sm:right-4 z-10 inline-flex items-center gap-1 bg-white/80 dark:bg-black/60 backdrop-blur-sm text-[#7c5730] text-xs font-medium px-2.5 py-1 rounded-full shadow-sm group-hover:bg-white transition-colors duration-200">
+                  <span className="absolute top-2.5 sm:top-4 right-2.5 sm:right-4 z-10 inline-flex items-center gap-1 rounded-full text-xs font-semibold transition-colors duration-200 bg-[#81542b] text-white px-3 py-2 border border-white/20 shadow-lg sm:bg-white/80 sm:dark:bg-black/60 sm:backdrop-blur-sm sm:text-[#7c5730] sm:font-medium sm:px-2.5 sm:py-1 sm:shadow-sm sm:border-0 sm:group-hover:bg-white">
                     Ver en menú
                     <ArrowUpRight
                       className="w-3.5 h-3.5 text-current"

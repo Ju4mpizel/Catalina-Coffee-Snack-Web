@@ -4,18 +4,27 @@ import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Mar\u00eda G.",
-    text: "El mejor caf\u00e9 de especialidad en Cochabamba. El V60 de los Andes es simplemente espectacular.",
+    name: "Valeria Morales",
+    role: "Cliente frecuente",
+    text: "Un lugar súper tranquilo y relajante para pasar la tarde o venir a charlar un rato. El cappuccino con leche vegetal me salvó el día, 10/10 la atención.",
     rating: 5,
   },
   {
-    name: "Carlos R.",
-    text: "Trabajo desde aqu\u00ed casi todos los d\u00edas. El ambiente es perfecto y el croissant de almendras, imperdible.",
+    name: "Andrés Colque",
+    role: "Amante del café de especialidad",
+    text: "Me encantaron las tortas, ¡tienen tantos sabores que uno nunca sabe cuál elegir! El cheesecake y el moka helado son adictivos.",
     rating: 5,
   },
   {
-    name: "Andrea P.",
-    text: "Los pasteles son horneados diariamente y se nota. El combo caf\u00e9 + brownie es mi ritual de las tardes.",
+    name: "Camila Fernandez",
+    role: "Trabajo remoto",
+    text: "El ambiente es hermoso y súper acogedor. La música está al volumen perfecto para leer o trabajar mientras te tomas algo rico.",
+    rating: 5,
+  },
+  {
+    name: "Diego Ramos",
+    role: "Visita de fin de semana",
+    text: "Los combos mañaneros están muy bien servidos y el pan siempre sale fresco y crujiente. Definitivamente se volvió nuestra parada fija de los sábados.",
     rating: 5,
   },
 ];
@@ -93,9 +102,14 @@ export default function Testimonials() {
                     <Star key={i} className="w-4 h-4 fill-current" />
                   ))}
                 </div>
-                <span className="font-sans text-sm font-semibold text-[#81542b] shrink-0">
-                  {t.name}
-                </span>
+                <div className="flex flex-col items-center gap-0.5 shrink-0">
+                  <span className="font-sans text-sm font-semibold text-[#81542b]">
+                    {t.name}
+                  </span>
+                  <span className="font-sans text-xs text-[#51443b]/80">
+                    {t.role}
+                  </span>
+                </div>
               </div>
             </m.div>
           </AnimatePresence>
@@ -110,19 +124,23 @@ export default function Testimonials() {
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             {testimonials.map((t, i) => (
               <button
                 key={t.name}
                 onClick={() => goTo(i)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  i === current
-                    ? "bg-[#81542b] w-5"
-                    : "bg-[#d5c3b7] hover:bg-[#81542b]/40"
-                }`}
+                className="relative flex items-center justify-center -m-[18px] p-[18px] cursor-pointer active:scale-90 transition-transform"
                 type="button"
                 aria-label={`Testimonio ${i + 1}`}
-              />
+              >
+                <span
+                  className={`block rounded-full transition-all duration-300 ${
+                    i === current
+                      ? "bg-[#81542b] w-5 h-2"
+                      : "bg-[#d5c3b7] w-2 h-2 hover:bg-[#81542b]/40"
+                  }`}
+                />
+              </button>
             ))}
           </div>
           <button

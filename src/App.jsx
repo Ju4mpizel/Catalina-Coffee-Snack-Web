@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import MarqueeBanner from "./components/MarqueeBanner";
@@ -18,6 +18,20 @@ export default function App() {
   const [currentView, setCurrentView] = useState("inicio");
   const [selectedCategory, setSelectedCategory] = useState("Ofertas Catalina");
   const [highlightedItemId, setHighlightedItemId] = useState(null);
+
+  // Al cambiar de vista (landing <-> menú), llevar el scroll al tope con animación
+  // para que la nueva vista siempre se abra desde el inicio y no en una posición
+  // arbitraria. Se ejecuta después del commit del render (post-DOM), cuando el
+  // smooth scroll ya no se cancela por el reemplazo del contenido.
+  const isFirstRender = useRef(true);
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return undefined;
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return undefined;
+  }, [currentView]);
 
   // Inicialización síncrona instantánea desde el snapshot
   const initialData = getInitialMenuData();
@@ -76,16 +90,38 @@ export default function App() {
   const handleItemClickFromGallery = (item) => {
     setSelectedCategory(item.categoria);
     setHighlightedItemId(item.id);
-
-    const catalogElement = document.getElementById("catalogo-section");
-    if (catalogElement) {
-      catalogElement.scrollIntoView({ behavior: "smooth" });
-    }
-
-    setTimeout(() => {
-      setHighlightedItemId(null);
-    }, 2500);
   };
+
+  // Al tocar una foto del mural:
+  // 1) El catálogo re-renderiza con la nueva categoría (AnimatePresence exit/enter),
+  //    lo que cambia la altura del grid ~0.4s.
+  // 2) Si scrolleamos en ese instante, el smooth scroll se corta / llega a medias
+  //    porque el destino cambia o el documento se encoge a mitad de recorrido.
+  // Por eso esperamos a que el grid se asiente antes de hacer scrollIntoView, y
+  // limpiamos el highlight tras unos segundos.
+  useEffect(() => {
+    if (!highlightedItemId) return undefined;
+
+    let cancelled = false;
+
+    const scrollTimer = setTimeout(() => {
+      if (cancelled) return;
+      const catalogElement = document.getElementById("catalogo-section");
+      if (catalogElement) {
+        catalogElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 420);
+
+    const clearTimer = setTimeout(() => {
+      setHighlightedItemId(null);
+    }, 2800);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(scrollTimer);
+      clearTimeout(clearTimer);
+    };
+  }, [highlightedItemId]);
 
   return (
     <div className="min-h-screen w-full bg-[#fdf9f2] text-[#1c1c18] font-sans flex flex-col justify-between relative">

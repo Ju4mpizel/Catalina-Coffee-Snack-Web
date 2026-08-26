@@ -150,7 +150,7 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
         {/* Barra inferior */}
         <div className="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] sm:text-xs text-center text-[#9f978c]">
           <p>
-            &copy; {new Date().getFullYear()} Catalina Coffee &amp; Snack
+            &copy; {new Date().getFullYear()} Catalina Coffee
             &mdash; Cochabamba, Bolivia
           </p>
           <p className="flex items-center gap-1.5">

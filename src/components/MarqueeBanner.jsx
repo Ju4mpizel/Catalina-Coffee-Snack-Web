@@ -1,11 +1,19 @@
-import { Coffee, Wheat, Leaf, Cookie, Timer } from "lucide-react";
+import {
+  Coffee,
+  Cake,
+  Sparkles,
+  Utensils,
+  HeartHandshake,
+  CupSoda,
+} from "lucide-react";
 
 const attributes = [
-  { icon: Coffee, text: "Café de Origen Bolivia" },
-  { icon: Wheat, text: "Repostería Horneada Hoy" },
-  { icon: Leaf, text: "Granos 100% Orgánicos" },
-  { icon: Cookie, text: "Opciones Sin Gluten" },
-  { icon: Timer, text: "Métodos V60 & AeroPress" },
+  { icon: Coffee, text: "Café Especial & Tostado Ideal" },
+  { icon: Cake, text: "Postres Frescos del Día" },
+  { icon: Sparkles, text: "Frappés & Bebidas Frías" },
+  { icon: Utensils, text: "Masitas Típicas & Salados" },
+  { icon: HeartHandshake, text: "Espacio Cómodo & Acogedor" },
+  { icon: CupSoda, text: "Mokas & Bebidas de Especialidad" },
 ];
 
 export default function MarqueeBanner() {
