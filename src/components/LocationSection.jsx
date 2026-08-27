@@ -1,9 +1,6 @@
-import { MapPin, Clock, Navigation, MessageCircle } from "lucide-react";
-import { getWhatsappUrl, BUSINESS_INFO } from "../config/site";
+import { MapPin, Clock, Navigation } from "lucide-react";
+import { BUSINESS_INFO } from "../config/site";
 
-const whatsappUrl = getWhatsappUrl(
-  "Hola Catalina Coffee, quisiera una consulta",
-);
 const directionsUrl = BUSINESS_INFO.mapsDirectionsUrl;
 
 export default function LocationSection() {
@@ -54,7 +51,7 @@ export default function LocationSection() {
                     <h3 className="font-serif text-lg text-[#1c1c18] mb-4">
                       Horarios de atenci&oacute;n
                     </h3>
-                    <dl className="space-y-2 mb-5">
+                    <dl className="space-y-2">
                       <div className="flex items-baseline gap-2 text-sm">
                         <dt className="text-[#1c1c18] font-medium">
                           {BUSINESS_INFO.scheduleDays}
@@ -65,15 +62,6 @@ export default function LocationSection() {
                         </dd>
                       </div>
                     </dl>
-                    <a
-                      href={whatsappUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-[#81542b] hover:text-[#7c5730] transition-colors"
-                    >
-                      <MessageCircle className="w-4 h-4" />
-                      Contactar por WhatsApp
-                    </a>
                   </div>
                 </div>
               </div>

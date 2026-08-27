@@ -20,15 +20,15 @@ export const BUSINESS_INFO = {
   address: "América Oeste #1114, entre Illapa y Runasimi",
   city: "Cochabamba",
   country: "Bolivia",
-  coordinates: { lat: -17.3895, lng: -66.1568 },
+  coordinates: { lat: -17.3716023, lng: -66.1744308 },
   schedule: "Lunes a Domingo, 08:30 – 20:30",
   scheduleDays: "Lunes a Domingo",
   scheduleHours: "08:30 – 20:30",
   phone: "+59177411400",
   mapsDirectionsUrl:
-    "https://www.google.com/maps/dir/?api=1&destination=-17.3895,-66.1568",
+    "https://www.google.com/maps/dir/?api=1&destination=-17.3716023,-66.1744308",
   mapsEmbedUrl:
-    "https://maps.google.com/maps?q=-17.3895,-66.1568&z=17&output=embed",
+    "https://maps.google.com/maps?q=-17.3716023,-66.1744308&z=17&output=embed",
 };
 
 /**

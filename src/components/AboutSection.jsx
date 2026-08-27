@@ -4,17 +4,17 @@ const highlights = [
   {
     icon: Cake,
     title: "Horneado a Diario",
-    description: "Postres y masitas frescas cada ma&ntilde;ana.",
+    description: "Postres y masitas frescas cada mañana.",
   },
   {
     icon: Coffee,
-    title: "Caf&eacute; Seleccionado",
+    title: "Café Seleccionado",
     description: "Tostado en su punto ideal para resaltar su mejor sabor.",
   },
   {
     icon: Sofa,
-    title: "Ambiente C&aacute;lido",
-    description: "El rinc&oacute;n perfecto para relajarte en Cochabamba.",
+    title: "Ambiente Cálido",
+    description: "El rincón perfecto para relajarte en Cochabamba.",
   },
 ];
 
