@@ -51,7 +51,6 @@ export default function Navbar({
   return (
     <header className="sticky top-0 z-50 bg-[#fdf9f2]/95 border-b border-[#d5c3b7]/40 shadow-sm [transform:translateZ(0)]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-3">
-        {/* Logo */}
         <div className="shrink-0">
           <BrandLogo
             size="md"
@@ -60,7 +59,7 @@ export default function Navbar({
           />
         </div>
 
-        {/* Desktop Nav (solo desde lg; antes md amontonaba los enlaces) */}
+        {/* Nav de escritorio (solo desde lg) */}
         <nav className="hidden lg:flex justify-center items-center gap-4 xl:gap-6 flex-1 min-w-0">
           <button type="button" onClick={handleHomeClick} className={navLinkClass(currentView === "inicio")}>
             Inicio
@@ -82,7 +81,6 @@ export default function Navbar({
           </button>
         </nav>
 
-        {/* Actions */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <a
             href={whatsappUrl}
@@ -119,9 +117,8 @@ export default function Navbar({
         </div>
       </div>
 
-      {/* Mobile Drawer: monta/desmonta con AnimatePresence animando SOLO opacity + y
-          (transform, acelerado por GPU). Sin max-height ni blur pesados. */}
-      <AnimatePresence>
+      {/* Drawer móvil animado solo con opacity/transform (GPU) */}
+        <AnimatePresence>
         {isMobileMenuOpen && (
           <m.div
             key="mobile-drawer"

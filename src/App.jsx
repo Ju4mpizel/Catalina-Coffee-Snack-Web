@@ -19,10 +19,8 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState("Ofertas Catalina");
   const [highlightedItemId, setHighlightedItemId] = useState(null);
 
-  // Al cambiar de vista (landing <-> menú), llevar el scroll al tope con animación
-  // para que la nueva vista siempre se abra desde el inicio y no en una posición
-  // arbitraria. Se ejecuta después del commit del render (post-DOM), cuando el
-  // smooth scroll ya no se cancela por el reemplazo del contenido.
+  // Al cambiar de vista, vuelve al tope con scroll suave (post-render para que
+  // el smooth scroll no se cancele por el reemplazo del contenido).
   const isFirstRender = useRef(true);
   useEffect(() => {
     if (isFirstRender.current) {
@@ -33,7 +31,7 @@ export default function App() {
     return undefined;
   }, [currentView]);
 
-  // Inicialización síncrona instantánea desde el snapshot
+  // Datos iniciales síncronos desde el snapshot
   const initialData = getInitialMenuData();
   const [menuItems, setMenuItems] = useState(initialData.menu);
   const [ofertasItems, setOfertasItems] = useState(initialData.ofertas);
@@ -92,13 +90,8 @@ export default function App() {
     setHighlightedItemId(item.id);
   };
 
-  // Al tocar una foto del mural:
-  // 1) El catálogo re-renderiza con la nueva categoría (AnimatePresence exit/enter),
-  //    lo que cambia la altura del grid ~0.4s.
-  // 2) Si scrolleamos en ese instante, el smooth scroll se corta / llega a medias
-  //    porque el destino cambia o el documento se encoge a mitad de recorrido.
-  // Por eso esperamos a que el grid se asiente antes de hacer scrollIntoView, y
-  // limpiamos el highlight tras unos segundos.
+  // Espera a que el grid re-asiente tras el cambio de categoría (~0.4s) antes
+  // de hacer scrollIntoView, y limpia el highlight después de unos segundos.
   useEffect(() => {
     if (!highlightedItemId) return undefined;
 
@@ -169,7 +162,6 @@ export default function App() {
         onNavigateMenu={() => setCurrentView("menu")}
       />
 
-      {/* Botón flotante de WhatsApp siempre visible */}
       <WhatsAppButton />
     </div>
   );

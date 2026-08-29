@@ -65,9 +65,7 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-[radial-gradient(ellipse_at_top,rgba(193,140,93,0.08),transparent_60%)]" />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-8 py-8 md:py-16">
-        {/* Columna principal */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {/* Marca */}
           <div className="sm:col-span-2 lg:col-span-1 flex flex-col items-start gap-5">
             <BrandLogo
               logoUrl="/Catalina_Logo_nuevo_white.svg"
@@ -78,7 +76,6 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
             />
           </div>
 
-          {/* Navegación */}
           <nav aria-label="Enlaces del pie de página">
             <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#c18c5d] mb-5">
               Explorar
@@ -98,7 +95,6 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
             </ul>
           </nav>
 
-          {/* Ubicación y horarios */}
           <div>
             <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#c18c5d] mb-5">
               Visítanos
@@ -122,7 +118,6 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
             </ul>
           </div>
 
-          {/* Contacto y redes */}
           <div>
             <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#c18c5d] mb-5">
               Hablemos
@@ -149,7 +144,6 @@ export default function Footer({ onNavigateHome, onNavigateMenu }) {
           </div>
         </div>
 
-        {/* Barra inferior */}
         <div className="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] sm:text-xs text-center text-[#9f978c]">
           <p>
             &copy; {new Date().getFullYear()} Catalina Coffee

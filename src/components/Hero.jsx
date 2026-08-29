@@ -4,7 +4,7 @@ import catalinaCupImg from "../assets/Catalina_cup_nuevo.webp";
 export default function Hero({ onExploreMenu }) {
   return (
     <section className="relative pt-8 pb-16 md:pt-16 md:pb-28 overflow-hidden">
-      {/* Fondo: imagen de la cafetería a sangre completa, nítida, con fade-in sutil */}
+      {/* Fondo a sangre completa con fade-in sutil */}
       <img
         src="/Catalina_BG.webp"
         alt=""
@@ -15,19 +15,14 @@ export default function Hero({ onExploreMenu }) {
         decoding="async"
       />
 
-      {/* Overlay cálido "deep roast": oscurece el fondo para que la imagen respire
-          y el texto crema destaque. Más denso abajo (funda con la página), más
-          ligero arriba (deja ver la foto). */}
+      {/* Overlay para oscurecer el fondo y destacar el texto crema */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#1c1c18]/95 via-[#1c1c18]/60 to-[#1c1c18]/40" />
 
-      {/* Resplandor cálido detrás del vaso */}
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-[#81542b]/20 blur-3xl rounded-full pointer-events-none hidden md:block" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 items-center">
-          {/* COLUMNA IZQUIERDA: TEXTO Y BOTÓN */}
           <div className="md:col-span-7 text-center md:text-left">
-            {/* Badge */}
             <div className="flex flex-col items-center md:items-start mb-6">
               <div
                 className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#f6bb88] text-xs font-semibold tracking-wider uppercase animate-hero-rise"
@@ -37,7 +32,6 @@ export default function Hero({ onExploreMenu }) {
               </div>
             </div>
 
-            {/* Título Principal */}
             <h1
               className="font-serif text-4xl sm:text-5xl md:text-6xl text-[#fdf9f2] font-normal tracking-wide leading-[1.15] mb-6 animate-hero-rise"
               style={{ animationDelay: "160ms" }}
@@ -48,7 +42,6 @@ export default function Hero({ onExploreMenu }) {
               </span>
             </h1>
 
-            {/* Descripción */}
             <p
               className="font-sans text-base sm:text-lg text-[#e6d9c8] max-w-xl mx-auto md:mx-0 leading-relaxed mb-8 font-normal animate-hero-rise"
               style={{ animationDelay: "240ms" }}
@@ -57,7 +50,6 @@ export default function Hero({ onExploreMenu }) {
               lugar pensado para pausar y disfrutar de cada instante.
             </p>
 
-            {/* Botón de Acción */}
             <div
               className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 animate-hero-rise"
               style={{ animationDelay: "320ms" }}
@@ -73,7 +65,6 @@ export default function Hero({ onExploreMenu }) {
             </div>
           </div>
 
-          {/* COLUMNA DERECHA: VASO DE CAFÉ EN LEVITACIÓN */}
           <div
             className="md:col-span-5 flex justify-center items-center relative animate-hero-rise"
             style={{ animationDelay: "400ms" }}

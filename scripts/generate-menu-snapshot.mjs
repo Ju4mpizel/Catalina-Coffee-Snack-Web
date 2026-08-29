@@ -13,7 +13,7 @@ if (existsSync(".env")) {
 const SHEET_ID = process.env.VITE_SHEETS_MENU_ID;
 const OUT_PATH = "src/data/menuSnapshot.json";
 
-// parseBoolean ultrasensible: evalúa .v, .f, booleanos, números y cadenas en español/inglés
+// parseBoolean tolerante: evalúa booleanos, números y cadenas en español/inglés
 const parseBoolean = (cell) => {
   if (!cell) return false;
   const val = cell.v !== undefined && cell.v !== null ? cell.v : cell.f;
@@ -107,21 +107,6 @@ async function fetchFromSheet() {
     }
     return acc;
   }, []);
-
-  // Diagnóstico en consola para ver qué detectó exactamente
-  console.log("\n--- DIAGNÓSTICO DE PRODUCTOS Y OFERTAS ---");
-  parsedMenu.forEach((p) => {
-    const esOf =
-      p.esOferta ||
-      p.categoria.toLowerCase().includes("oferta") ||
-      (p.precioAntes && p.precioAntes > p.precio);
-    console.log(
-      `• [${esOf ? "OFERTA" : "PRODUCTO"}] ${p.nombre} | Cat: "${
-        p.categoria
-      }" | esOferta: ${p.esOferta}`,
-    );
-  });
-  console.log("-------------------------------------------\n");
 
   return { menu: parsedMenu, ofertas };
 }

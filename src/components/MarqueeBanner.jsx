@@ -17,7 +17,7 @@ const attributes = [
 ];
 
 export default function MarqueeBanner() {
-  // Triplicamos o cuadruplicamos la lista para garantizar cobertura en pantallas anchas (4K / Monitores grandes)
+  // Lista repetida para cubrir pantallas anchas (4K / monitores grandes)
   const marqueeItems = [
     ...attributes,
     ...attributes,

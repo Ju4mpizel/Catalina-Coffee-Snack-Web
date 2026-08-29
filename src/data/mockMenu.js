@@ -122,7 +122,7 @@ export const mockMenu = [
       "Esponjoso muffin con arándanos frescos orgánicos y crumble crujiente.",
     imagen:
       "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=600&q=75&auto=format",
-    destacadoPinterest: "SÍ", // <-- AHORA TAMBIÉN APARECE EN PINTEREST
+    destacadoPinterest: "SÍ",
     formatoPinterest: "cuadrado",
   },
   {

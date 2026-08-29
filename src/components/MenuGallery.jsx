@@ -1,4 +1,3 @@
-// src/components/MenuGallery.jsx
 import { m, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, MousePointerClick, Sparkles } from "lucide-react";
 
@@ -7,13 +6,13 @@ const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600&q=75&auto=format";
 
 export default function MenuGallery({ items, onItemClick }) {
-  // Guard defensivo (items || []) + filtro normalizado
+  // Guard defensivo: items vacíos + filtro de destacados
   const safeItems = items || [];
   const featuredItems = safeItems.filter(
     (item) => item.destacadoPinterest === "SÍ" || item.destacado === true,
   );
 
-  // Diccionario de clases Tailwind según lo que escribas en la columna I del Sheets
+  // Mapa de clases Tailwind según la columna I del Sheet
   const formatMap = {
     largo: "aspect-[2/3]",
     alto: "aspect-[3/4]",
@@ -22,7 +21,7 @@ export default function MenuGallery({ items, onItemClick }) {
     horizontal: "aspect-[4/3]",
   };
 
-  // Función controladora para imágenes rotas
+  // Imágenes rotas -> fallback
   const handleImageError = (e) => {
     e.target.onerror = null;
     e.target.src = FALLBACK_IMAGE;

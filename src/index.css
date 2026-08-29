@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* 1. Definición de animación nativa CSS */
+/* Animaciones nativas CSS */
 @keyframes marquee {
   0% {
     transform: translate3d(0, 0, 0);
@@ -67,7 +67,7 @@
   }
 }
 
-/* 2. Configuración de Theme para Tailwind CSS v4 */
+/* Theme de Tailwind CSS v4 */
 @theme {
   --font-serif: "Playfair Display SC", serif;
   --font-sans: "Karla", sans-serif;
@@ -104,7 +104,7 @@
   will-change: transform;
 }
 /* Sistema de aparición progresiva de secciones.
-   Utiliza únicamente opacity y transform: translateY para evitar alteraciones de layout.
+   Solo usa opacity y translateY para no alterar el layout.
    will-change asegura la composición por GPU. */
 [data-reveal] {
   opacity: 0;
@@ -120,7 +120,7 @@
   transform: translateY(0);
 }
 
-/* 4. Estilos base globales */
+/* Estilos base globales */
 html {
   scroll-behavior: smooth;
 }
@@ -167,7 +167,7 @@ h2 {
   border-radius: 8px;
 }
 
-/* 5. Utilidades personalizadas */
+/* Utilidades personalizadas */
 @utility bg-artisan-dots {
   background-image: radial-gradient(circle, #81542b 0.5px, transparent 0.5px);
   background-size: 24px 24px;

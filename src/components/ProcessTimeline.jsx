@@ -48,7 +48,6 @@ export default function ProcessTimeline() {
               style={{ transitionDelay: `${index * 120}ms` }}
               className="relative flex flex-col items-center text-center group"
             >
-              {/* Círculo del Ícono */}
               <div className="relative z-10 w-20 h-20 rounded-full bg-[#fdf9f2] border border-[#d5c3b7]/60 shadow-sm flex items-center justify-center mb-6 group-hover:border-[#81542b] group-hover:scale-105 transition-all duration-300">
                 <step.icon className="w-8 h-8 text-[#81542b]" />
                 <span className="absolute -top-1 -right-1 w-7 h-7 rounded-full bg-[#81542b] text-[#fdf9f2] text-xs font-bold flex items-center justify-center shadow-sm">
@@ -56,7 +55,6 @@ export default function ProcessTimeline() {
                 </span>
               </div>
 
-              {/* Textos */}
               <h3 className="font-serif text-xl font-bold text-[#1c1c18] mb-3">
                 {step.title}
               </h3>

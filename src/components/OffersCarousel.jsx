@@ -23,6 +23,7 @@ export default function OffersCarousel({ ofertas }) {
 
   const handleTouchEnd = (e) => {
     setIsPaused(false);
+    if (touchStartX.current === null || touchStartY.current === null) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
     const dy = e.changedTouches[0].clientY - touchStartY.current;
     if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
@@ -33,9 +34,8 @@ export default function OffersCarousel({ ofertas }) {
     touchStartY.current = null;
   };
 
-  // Autoplay: los hooks se ejecutan SIEMPRE en el mismo orden (antes del early return)
   useEffect(() => {
-    if (total === 0 || isPaused) return undefined;
+    if (total <= 1 || isPaused) return undefined;
     const timer = setInterval(() => {
       setDirection(1);
       setCurrentIndex((prev) => (prev + 1) % total);
@@ -74,10 +74,10 @@ export default function OffersCarousel({ ofertas }) {
     <section
       id="ofertas"
       data-reveal
-      className="py-12 sm:py-16 bg-[#f1ede6] scroll-mt-24"
+      className="py-12 sm:py-16 bg-[#f1ede6] scroll-mt-24 overflow-hidden"
     >
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="mb-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="mb-8 sm:mb-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#fdf9f2] text-[#81542b] text-xs font-semibold tracking-wide uppercase border border-[#d5c3b7]/50">
             <span>Promociones Especiales</span>
           </div>
@@ -87,8 +87,9 @@ export default function OffersCarousel({ ofertas }) {
         </div>
 
         <div className="relative">
+          {/* Contenedor principal con altura fija y sin desborde */}
           <div
-            className="overflow-hidden rounded-3xl"
+            className="overflow-hidden rounded-3xl bg-white border border-[#d5c3b7]/40 shadow-md h-[520px] sm:h-[490px] md:h-[390px]"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
             onTouchStart={handleTouchStart}
@@ -96,7 +97,7 @@ export default function OffersCarousel({ ofertas }) {
           >
             <AnimatePresence mode="wait" custom={direction}>
               <m.div
-                key={current.id}
+                key={current.id || currentIndex}
                 custom={direction}
                 variants={{
                   enter: (dir) => ({ x: dir > 0 ? 60 : -60, opacity: 0 }),
@@ -106,10 +107,11 @@ export default function OffersCarousel({ ofertas }) {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                className="bg-white border border-[#d5c3b7]/40 shadow-md overflow-hidden md:grid md:grid-cols-12"
+                transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+                className="w-full h-full flex flex-col md:grid md:grid-cols-2 overflow-hidden"
               >
-                <div className="md:col-span-6 h-64 md:h-96 relative overflow-hidden bg-[#fdf9f2]">
+                {/* 1. Lado Imagen */}
+                <div className="relative w-full h-[45%] md:h-full overflow-hidden bg-[#fdf9f2] shrink-0">
                   <img
                     src={current.imagen}
                     alt={current.titulo}
@@ -118,30 +120,36 @@ export default function OffersCarousel({ ofertas }) {
                     decoding="async"
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute top-4 left-4 bg-[#81542b] text-white text-xs font-bold px-3.5 py-1.5 rounded-full shadow-sm uppercase tracking-wider">
-                    {current.descuento}
-                  </div>
+                  {current.descuento && (
+                    <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-[#81542b] text-white text-[11px] sm:text-xs font-bold px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full shadow-sm uppercase tracking-wider">
+                      {current.descuento}
+                    </div>
+                  )}
                 </div>
 
-                <div className="md:col-span-6 p-8 md:p-12 flex flex-col justify-between">
-                  <div>
-                    <div className="text-xs font-medium text-[#7c5730] mb-3">
-                      {current.valido}
+                {/* 2. Lado Contenido */}
+                <div className="w-full h-[55%] md:h-full p-5 sm:p-6 md:p-8 lg:p-10 flex flex-col justify-between overflow-hidden">
+                  <div className="overflow-hidden">
+                    <div className="text-[11px] sm:text-xs font-medium text-[#7c5730] mb-1.5 sm:mb-2 truncate">
+                      {current.valido || "Disponible hoy"}
                     </div>
-                    <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#1c1c18] mb-4 leading-tight">
+                    <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[#1c1c18] mb-2 sm:mb-3 leading-snug line-clamp-2">
                       {current.titulo}
                     </h3>
-                    <p className="font-sans text-sm sm:text-base text-[#51443b] leading-relaxed mb-6">
+                    <p className="font-sans text-xs sm:text-sm md:text-base text-[#51443b] leading-relaxed line-clamp-3">
                       {current.descripcion}
                     </p>
                   </div>
 
-                  <div className="pt-6 border-t border-[#f1ede6]">
-                    <div className="flex items-baseline gap-3 mb-6">
-                      <span className="text-sm text-[#51443b] line-through">
-                        Bs. {current.precioAntes}
-                      </span>
-                      <span className="font-serif text-2xl font-bold text-[#81542b]">
+                  {/* 3. Precios y Botón fijados abajo */}
+                  <div className="pt-3 sm:pt-4 border-t border-[#f1ede6] shrink-0">
+                    <div className="flex items-baseline gap-2.5 mb-3 sm:mb-4">
+                      {current.precioAntes && (
+                        <span className="text-xs sm:text-sm text-[#51443b]/70 line-through">
+                          Bs. {current.precioAntes}
+                        </span>
+                      )}
+                      <span className="font-serif text-xl sm:text-2xl font-bold text-[#81542b]">
                         Bs. {current.precioOferta}
                       </span>
                     </div>
@@ -149,7 +157,7 @@ export default function OffersCarousel({ ofertas }) {
                       href={whatsappUrl(current.titulo)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-[#81542b] text-[#81542b] hover:bg-[#81542b] hover:text-white text-sm font-semibold px-6 py-3 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-[#81542b] text-[#81542b] hover:bg-[#81542b] hover:text-white text-xs sm:text-sm font-semibold px-5 py-2.5 sm:px-6 sm:py-3 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
                     >
                       <MessageCircle className="w-4 h-4 fill-current" />
                       <span>Pedir por WhatsApp</span>
@@ -160,42 +168,73 @@ export default function OffersCarousel({ ofertas }) {
             </AnimatePresence>
           </div>
 
-          <button
-            type="button"
-            onClick={prev}
-            className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 border border-[#d5c3b7]/50 items-center justify-center text-[#51443b] hover:bg-[#81542b] hover:text-white transition-colors shadow-xs cursor-pointer active:scale-95 backdrop-blur-none"
-            aria-label="Anterior"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            type="button"
-            onClick={next}
-            className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/80 border border-[#d5c3b7]/50 items-center justify-center text-[#51443b] hover:bg-[#81542b] hover:text-white transition-colors shadow-xs cursor-pointer active:scale-95 backdrop-blur-none"
-            aria-label="Siguiente"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-
-          <div className="flex items-center justify-center gap-2 mt-6">
-            {ofertas.map((_, index) => (
+          {/* Flechas de navegación para Desktop */}
+          {total > 1 && (
+            <>
               <button
-                key={index}
                 type="button"
-                onClick={() => goTo(index)}
-                className="min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer active:scale-90 transition-transform"
-                aria-label={`Ir a oferta ${index + 1}`}
+                onClick={prev}
+                className="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/95 border border-[#d5c3b7]/50 items-center justify-center text-[#51443b] hover:bg-[#81542b] hover:text-white transition-colors shadow-sm cursor-pointer active:scale-95"
+                aria-label="Anterior oferta"
               >
-                <span
-                  className={`block rounded-full transition-all duration-300 ${
-                    index === currentIndex
-                      ? "bg-[#81542b] w-6 h-2.5"
-                      : "bg-[#d5c3b7] hover:bg-[#81542b]/50 w-2.5 h-2.5"
-                  }`}
-                />
+                <ChevronLeft className="w-5 h-5" />
               </button>
+              <button
+                type="button"
+                onClick={next}
+                className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/95 border border-[#d5c3b7]/50 items-center justify-center text-[#51443b] hover:bg-[#81542b] hover:text-white transition-colors shadow-sm cursor-pointer active:scale-95"
+                aria-label="Siguiente oferta"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </>
+          )}
+
+          {/* Paginación adaptable (Dots o Cápsula numérica) */}
+          {total > 1 &&
+            (total <= 6 ? (
+              <div className="flex items-center justify-center flex-wrap gap-1 mt-5 max-w-full">
+                {ofertas.map((_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => goTo(index)}
+                    className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center cursor-pointer active:scale-90 transition-transform"
+                    aria-label={`Ir a oferta ${index + 1}`}
+                  >
+                    <span
+                      className={`block rounded-full transition-all duration-300 ${
+                        index === currentIndex
+                          ? "bg-[#81542b] w-6 h-2"
+                          : "bg-[#d5c3b7] hover:bg-[#81542b]/50 w-2 h-2"
+                      }`}
+                    />
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="flex items-center justify-center gap-3 mt-5">
+                <button
+                  type="button"
+                  onClick={prev}
+                  className="w-9 h-9 rounded-full bg-white border border-[#d5c3b7]/50 flex md:hidden items-center justify-center text-[#51443b] active:scale-95"
+                  aria-label="Oferta anterior"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <div className="px-4 py-1.5 rounded-full bg-white border border-[#d5c3b7]/50 text-xs font-semibold text-[#81542b] shadow-xs">
+                  {currentIndex + 1} de {total}
+                </div>
+                <button
+                  type="button"
+                  onClick={next}
+                  className="w-9 h-9 rounded-full bg-white border border-[#d5c3b7]/50 flex md:hidden items-center justify-center text-[#51443b] active:scale-95"
+                  aria-label="Siguiente oferta"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             ))}
-          </div>
         </div>
       </div>
     </section>

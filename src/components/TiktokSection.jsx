@@ -8,7 +8,7 @@ const TIKTOK_VIDEOS = [
     views: "1.4K",
     likes: "220",
     thumbnail:
-      "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&h=1000&fit=crop", // Postre de chocolate artesanal
+      "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&h=1000&fit=crop",
   },
   {
     id: "7621375144660864274",
@@ -17,7 +17,7 @@ const TIKTOK_VIDEOS = [
     views: "2.1K",
     likes: "270",
     thumbnail:
-      "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=600&h=1000&fit=crop", // Café Latte & Libros de estudio
+      "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=600&h=1000&fit=crop",
   },
   {
     id: "7532168088251387141",
@@ -26,7 +26,7 @@ const TIKTOK_VIDEOS = [
     views: "5.8K",
     likes: "750",
     thumbnail:
-      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&h=1000&fit=crop", // Terraza y fachada acogedora
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&h=1000&fit=crop",
   },
   {
     id: "7608584465958358280",
@@ -35,7 +35,7 @@ const TIKTOK_VIDEOS = [
     views: "3.2K",
     likes: "250",
     thumbnail:
-      "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&h=1000&fit=crop", // Sándwich tostado gourmet
+      "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&h=1000&fit=crop",
   },
 ];
 
@@ -56,7 +56,7 @@ export default function TikTokSection() {
         </p>
       </div>
 
-      {/* Grid de tarjetas limpias en ratio 9:16 */}
+      {/* Grid de tarjetas en ratio 9:16 */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
         {TIKTOK_VIDEOS.map((video, index) => (
           <a
@@ -68,7 +68,6 @@ export default function TikTokSection() {
             style={{ transitionDelay: `${index * 80}ms` }}
             className="group relative aspect-[9/16] rounded-3xl overflow-hidden cursor-pointer bg-[#f1ede6] border border-[#d5c3b7]/40 shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 active:scale-[0.98]"
           >
-            {/* Imagen de Portada Temática */}
             <img
               src={video.thumbnail}
               alt={video.title}
@@ -77,14 +76,11 @@ export default function TikTokSection() {
               decoding="async"
             />
 
-            {/* Capa de Información Estilo TikTok */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent flex flex-col justify-between p-4">
-              {/* Botón de Play Superior */}
               <div className="self-end w-9 h-9 rounded-full bg-black/40 backdrop-blur-xs flex items-center justify-center text-white border border-white/20 group-hover:scale-110 group-hover:bg-[#81542b] transition-all">
                 <Play className="w-4 h-4 fill-white ml-0.5" />
               </div>
 
-              {/* Textos inferiores limpios */}
               <div>
                 <p className="text-white font-serif text-xs sm:text-sm font-medium line-clamp-2 mb-2 leading-snug drop-shadow-xs">
                   {video.title}

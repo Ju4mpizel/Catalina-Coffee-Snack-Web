@@ -82,14 +82,14 @@ export default function MenuCatalog({
   onSelectCategory,
   highlightedItemId,
 }) {
-  // 1. Categorías 100% dinámicas extraídas del Google Sheet con guard defensivo
+  // Categorías dinámicas extraídas del Google Sheet (con guard defensivo)
   const safeItems = items || [];
 
   const dynamicCategories = Array.from(
     new Set(safeItems.map((i) => i.categoria?.trim()).filter(Boolean)),
   );
 
-  // Filtrado case-insensitive para evitar botones duplicados por variaciones de mayúsculas/minúsculas
+  // Filtra duplicados de categoría sin distinguir mayúsculas
   const categories = [
     "Ofertas Catalina",
     "Todos",
@@ -130,7 +130,6 @@ export default function MenuCatalog({
           Nuestro Menú
         </h2>
 
-        {/* Pestañas de Categorías Dinámicas */}
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           {categories.map((cat) => {
             const isOfferCategory = cat === "Ofertas Catalina";
@@ -159,7 +158,6 @@ export default function MenuCatalog({
         </div>
       </div>
 
-      {/* Grid de Productos */}
       <AnimatePresence mode="wait">
         <m.div
           key={selectedCategory}
@@ -183,7 +181,6 @@ export default function MenuCatalog({
                   : "shadow-xs hover:border-[#81542b]/40 active:scale-[0.99]"
               }`}
             >
-              {/* Imagen con Fallback */}
               <div className="relative flex-shrink-0">
                 <img
                   src={item.imagen}
@@ -200,7 +197,6 @@ export default function MenuCatalog({
                 )}
               </div>
 
-              {/* Información de Producto */}
               <div className="flex flex-col justify-between flex-grow">
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-1">

@@ -37,7 +37,7 @@
       "destacadoPinterest": "SÍ",
       "destacado": true,
       "formatoPinterest": "largo",
-      "esOferta": false
+      "esOferta": true
     },
     {
       "id": "4",
@@ -50,7 +50,7 @@
       "destacadoPinterest": "SÍ",
       "destacado": true,
       "formatoPinterest": "largo",
-      "esOferta": false
+      "esOferta": true
     },
     {
       "id": "5",
@@ -63,46 +63,59 @@
       "destacadoPinterest": "SÍ",
       "destacado": true,
       "formatoPinterest": "cuadrado",
-      "esOferta": false
+      "esOferta": true
     },
     {
       "id": "6",
       "nombre": "Muffin de Arándanos",
       "categoria": "Repostería",
       "precio": 15,
-      "precioAntes": null,
+      "precioAntes": 16,
       "descripcion": "Esponjoso muffin con arándanos frescos orgánicos y crumble.",
       "imagen": "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=800",
       "destacadoPinterest": "SÍ",
       "destacado": true,
       "formatoPinterest": "cuadrado",
-      "esOferta": false
+      "esOferta": true
     },
     {
       "id": "7",
       "nombre": "Espresso Doble Origen",
       "categoria": "Cafés",
       "precio": 14,
-      "precioAntes": null,
+      "precioAntes": 15,
       "descripcion": "Extracción limpia de granos seleccionados con notas a chocolate.",
       "imagen": "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800",
       "destacadoPinterest": "SÍ",
       "destacado": true,
       "formatoPinterest": "largo",
-      "esOferta": false
+      "esOferta": true
     },
     {
       "id": "8",
       "nombre": "Iced Caramel Latte",
       "categoria": "Bebidas",
       "precio": 24,
-      "precioAntes": null,
+      "precioAntes": 30,
       "descripcion": "Café frío con jarabe de caramelo artesanal, leche y hielo de espresso.",
       "imagen": "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800",
       "destacadoPinterest": "SÍ",
       "destacado": true,
       "formatoPinterest": "largo",
-      "esOferta": false
+      "esOferta": true
+    },
+    {
+      "id": "9",
+      "nombre": "Cafe Simple",
+      "categoria": "Cafés",
+      "precio": 15,
+      "precioAntes": 20,
+      "descripcion": "Cafe Simple recien preparado",
+      "imagen": "https://res.cloudinary.com/coykzetl/image/upload/v1787971698/A_small_cup_of_coffee.jpg",
+      "destacadoPinterest": "SÍ",
+      "destacado": true,
+      "formatoPinterest": "cuadrado",
+      "esOferta": true
     }
   ],
   "ofertas": [
@@ -124,6 +137,76 @@
       "precioAntes": 49,
       "precioOferta": 39,
       "imagen": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800",
+      "valido": "Disponible Hoy"
+    },
+    {
+      "id": "3",
+      "titulo": "Cappuccino Artesanal",
+      "descuento": "Oferta",
+      "descripcion": "Espresso doble con leche texturizada al vapor y fino arte latte.",
+      "precioAntes": 35,
+      "precioOferta": 25,
+      "imagen": "https://images.unsplash.com/photo-1534778101976-62847782c213?w=800",
+      "valido": "Disponible Hoy"
+    },
+    {
+      "id": "4",
+      "titulo": "Croissant de Almendras",
+      "descuento": "Oferta",
+      "descripcion": "Hojaldre artesanal horneado diariamente con crema pastelera.",
+      "precioAntes": 35,
+      "precioOferta": 25,
+      "imagen": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800",
+      "valido": "Disponible Hoy"
+    },
+    {
+      "id": "5",
+      "titulo": "Tostado Moka & Queso",
+      "descuento": "Oferta",
+      "descripcion": "Pan masa madre tostado a la plancha con mantequilla y queso fundido.",
+      "precioAntes": 35,
+      "precioOferta": 25,
+      "imagen": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800",
+      "valido": "Disponible Hoy"
+    },
+    {
+      "id": "6",
+      "titulo": "Muffin de Arándanos",
+      "descuento": "Oferta",
+      "descripcion": "Esponjoso muffin con arándanos frescos orgánicos y crumble.",
+      "precioAntes": 16,
+      "precioOferta": 15,
+      "imagen": "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=800",
+      "valido": "Disponible Hoy"
+    },
+    {
+      "id": "7",
+      "titulo": "Espresso Doble Origen",
+      "descuento": "Oferta",
+      "descripcion": "Extracción limpia de granos seleccionados con notas a chocolate.",
+      "precioAntes": 15,
+      "precioOferta": 14,
+      "imagen": "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800",
+      "valido": "Disponible Hoy"
+    },
+    {
+      "id": "8",
+      "titulo": "Iced Caramel Latte",
+      "descuento": "Oferta",
+      "descripcion": "Café frío con jarabe de caramelo artesanal, leche y hielo de espresso.",
+      "precioAntes": 30,
+      "precioOferta": 24,
+      "imagen": "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800",
+      "valido": "Disponible Hoy"
+    },
+    {
+      "id": "9",
+      "titulo": "Cafe Simple",
+      "descuento": "Oferta",
+      "descripcion": "Cafe Simple recien preparado",
+      "precioAntes": 20,
+      "precioOferta": 15,
+      "imagen": "https://res.cloudinary.com/coykzetl/image/upload/v1787971698/A_small_cup_of_coffee.jpg",
       "valido": "Disponible Hoy"
     }
   ]

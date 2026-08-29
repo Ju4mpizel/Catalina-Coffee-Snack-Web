@@ -14,10 +14,10 @@ export default function BrandLogo({
   // Dimensiones equilibradas en navbar y footer
   const dimensions =
     {
-      sm: "h-12 sm:h-14", // Móvil o espacios reducidos
-      md: "h-14 sm:h-16", // Navbar: visible pero sin robar protagonismo
-      lg: "h-16 sm:h-20", // Para el Footer o vistas destacadas
-      footer: "h-14 md:h-20", // Footer: compacto en móvil, mediano en desktop
+      sm: "h-12 sm:h-14",
+      md: "h-14 sm:h-16",
+      lg: "h-16 sm:h-20",
+      footer: "h-14 md:h-20",
     }[size] || "h-14 sm:h-16";
 
   return (
@@ -38,7 +38,7 @@ export default function BrandLogo({
           className={`${dimensions} w-auto object-contain transition-transform duration-300 group-hover:scale-105`}
         />
       ) : (
-        /* Texto de respaldo únicamente si la imagen falla al cargar */
+        /* Fallback de texto si la imagen falla */
         <span className="font-serif text-2xl font-bold text-[#1c1c18]">
           Catalina
         </span>
