@@ -5,9 +5,6 @@ import { Tag } from "lucide-react";
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600&q=75&auto=format";
 
-// Descripción con soporte "Ver más / Ver menos" y apertura suave en móvil.
-// Mide la altura natural (scrollHeight) y la altura recortada (clientHeight)
-// de la misma etiqueta <p> para animar `height` entre ambos estados con framer-motion.
 function ExpandableDescription({ text }) {
   const ref = useRef(null);
   const expandedRef = useRef(false);
@@ -28,7 +25,6 @@ function ExpandableDescription({ text }) {
     const measure = () => {
       const open = el.scrollHeight;
       setOpenHeight(open);
-      // Solo capturamos la altura recortada mientras el texto está contraído.
       if (!expandedRef.current) {
         setClosedHeight(el.clientHeight);
         setTruncated(open > el.clientHeight + 1);
@@ -82,34 +78,66 @@ export default function MenuCatalog({
   onSelectCategory,
   highlightedItemId,
 }) {
-  // Categorías dinámicas extraídas del Google Sheet (con guard defensivo)
-  const safeItems = items || [];
+  const safeItems = Array.isArray(items) ? items.filter(Boolean) : [];
 
+  // Comprobar si hay al menos una oferta activa
+  const hasOffers = safeItems.some((item) => {
+    const cat = String(item.categoria || "")
+      .toLowerCase()
+      .trim();
+    return (
+      item.esOferta === true ||
+      cat === "ofertas catalina" ||
+      cat === "promos" ||
+      cat === "promociones"
+    );
+  });
+
+  // Extraer categorías dinámicas únicas de Google Sheets
   const dynamicCategories = Array.from(
-    new Set(safeItems.map((i) => i.categoria?.trim()).filter(Boolean)),
+    new Set(
+      safeItems
+        .map((i) => i.categoria?.trim())
+        .filter(Boolean)
+        .filter(
+          (cat) =>
+            cat.toLowerCase() !== "todos" &&
+            cat.toLowerCase() !== "ofertas catalina" &&
+            cat.toLowerCase() !== "promos" &&
+            cat.toLowerCase() !== "promociones",
+        ),
+    ),
   );
 
-  // Filtra duplicados de categoría sin distinguir mayúsculas
+  // Armar lista de pestañas
   const categories = [
-    "Ofertas Catalina",
+    ...(hasOffers ? ["Ofertas Catalina"] : []),
     "Todos",
-    ...dynamicCategories.filter(
-      (cat) =>
-        cat.toLowerCase() !== "ofertas catalina" &&
-        cat.toLowerCase() !== "todos",
-    ),
+    ...dynamicCategories,
   ];
 
-  // Filtrado dinámico de items
-  const filteredItems =
-    selectedCategory === "Todos"
-      ? safeItems
-      : safeItems.filter(
-          (item) =>
-            item.categoria &&
-            item.categoria.toLowerCase().trim() ===
-              selectedCategory.toLowerCase().trim(),
-        );
+  // Filtrado de productos según la pestaña activa
+  const filteredItems = safeItems.filter((item) => {
+    if (selectedCategory === "Todos") return true;
+
+    if (selectedCategory === "Ofertas Catalina") {
+      const cat = String(item.categoria || "")
+        .toLowerCase()
+        .trim();
+      return (
+        item.esOferta === true ||
+        cat === "ofertas catalina" ||
+        cat === "promos" ||
+        cat === "promociones"
+      );
+    }
+
+    return (
+      item.categoria &&
+      item.categoria.toLowerCase().trim() ===
+        selectedCategory.toLowerCase().trim()
+    );
+  });
 
   const handleImageError = (e) => {
     e.target.onerror = null;
@@ -146,8 +174,8 @@ export default function MenuCatalog({
                       ? "bg-[#81542b] text-white shadow-md ring-2 ring-[#81542b]/40"
                       : "bg-[#81542b]/15 text-[#81542b] border border-[#81542b]/40 hover:bg-[#81542b]/25"
                     : isSelected
-                    ? "bg-[#81542b] text-white shadow-sm"
-                    : "bg-[#f1ede6] text-[#51443b] hover:bg-[#ece8e1]"
+                      ? "bg-[#81542b] text-white shadow-sm"
+                      : "bg-[#f1ede6] text-[#51443b] hover:bg-[#ece8e1]"
                 }`}
               >
                 {isOfferCategory && <Tag className="w-4 h-4 text-current" />}
@@ -167,62 +195,75 @@ export default function MenuCatalog({
           transition={{ duration: 0.2, ease: "easeOut" }}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
-          {filteredItems.map((item) => (
-            <div
-              key={item.id}
-              id={`item-${item.id}`}
-              className={`p-5 rounded-2xl bg-white border transition-all duration-200 hover:-translate-y-0.5 flex gap-4 relative ${
-                item.esOferta
-                  ? "border-[#81542b]/60 bg-[#fdf9f2]/40"
-                  : "border-[#d5c3b7]/40"
-              } ${
-                highlightedItemId === item.id
-                  ? "border-[#81542b] ring-2 ring-[#81542b]/30 shadow-lg scale-[1.01]"
-                  : "shadow-xs hover:border-[#81542b]/40 active:scale-[0.99]"
-              }`}
-            >
-              <div className="relative flex-shrink-0">
-                <img
-                  src={item.imagen}
-                  alt={item.nombre}
-                  onError={handleImageError}
-                  className="w-24 h-24 sm:w-28 sm:h-28 rounded-xl object-cover bg-[#f1ede6]"
-                  loading="lazy"
-                  decoding="async"
-                />
-                {item.esOferta && (
-                  <span className="absolute top-1 left-1 bg-[#81542b] text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
-                    Oferta
-                  </span>
-                )}
-              </div>
+          {filteredItems.map((item) => {
+            const esItemOferta =
+              item.esOferta ||
+              String(item.categoria || "").toLowerCase() ===
+                "ofertas catalina" ||
+              String(item.categoria || "").toLowerCase() === "promos";
 
-              <div className="flex flex-col justify-between flex-grow">
-                <div>
-                  <div className="flex items-start justify-between gap-2 mb-1">
-                    <h3 className="font-serif text-lg font-bold text-[#1c1c18]">
-                      {item.nombre}
-                    </h3>
-                    <div className="text-right">
-                      {item.precioAntes && (
-                        <span className="text-xs text-[#51443b] line-through block leading-none mb-0.5">
-                          Bs. {item.precioAntes}
-                        </span>
-                      )}
-                      <span className="font-sans font-bold text-[#81542b] text-base whitespace-nowrap">
-                        Bs. {item.precio}
-                      </span>
-                    </div>
-                  </div>
-                  <ExpandableDescription text={item.descripcion} />
+            const etiquetaDescuento =
+              item.descuento && item.descuento.trim() !== ""
+                ? item.descuento
+                : "Oferta";
+
+            return (
+              <div
+                key={item.id}
+                id={`item-${item.id}`}
+                className={`p-5 rounded-2xl bg-white border transition-all duration-200 hover:-translate-y-0.5 flex gap-4 relative ${
+                  esItemOferta
+                    ? "border-[#81542b]/60 bg-[#fdf9f2]/40"
+                    : "border-[#d5c3b7]/40"
+                } ${
+                  highlightedItemId === item.id
+                    ? "border-[#81542b] ring-2 ring-[#81542b]/30 shadow-lg scale-[1.01]"
+                    : "shadow-xs hover:border-[#81542b]/40 active:scale-[0.99]"
+                }`}
+              >
+                <div className="relative flex-shrink-0">
+                  <img
+                    src={item.imagen || FALLBACK_IMAGE}
+                    alt={item.nombre}
+                    onError={handleImageError}
+                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-xl object-cover bg-[#f1ede6]"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  {esItemOferta && (
+                    <span className="absolute top-1 left-1 bg-[#81542b] text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
+                      {etiquetaDescuento}
+                    </span>
+                  )}
                 </div>
 
-                <span className="text-[10px] font-semibold text-[#7c5730] uppercase tracking-wider mt-2">
-                  {item.categoria}
-                </span>
+                <div className="flex flex-col justify-between flex-grow">
+                  <div>
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <h3 className="font-serif text-lg font-bold text-[#1c1c18]">
+                        {item.nombre}
+                      </h3>
+                      <div className="text-right">
+                        {item.precioAntes && (
+                          <span className="text-xs text-[#51443b] line-through block leading-none mb-0.5">
+                            Bs. {item.precioAntes}
+                          </span>
+                        )}
+                        <span className="font-sans font-bold text-[#81542b] text-base whitespace-nowrap">
+                          Bs. {item.precio}
+                        </span>
+                      </div>
+                    </div>
+                    <ExpandableDescription text={item.descripcion} />
+                  </div>
+
+                  <span className="text-[10px] font-semibold text-[#7c5730] uppercase tracking-wider mt-2">
+                    {item.categoria}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </m.div>
       </AnimatePresence>
     </section>

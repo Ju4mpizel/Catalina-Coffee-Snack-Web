@@ -13,7 +13,8 @@ export default function OffersCarousel({ ofertas }) {
   const touchStartX = useRef(null);
   const touchStartY = useRef(null);
 
-  const total = ofertas?.length || 0;
+  const safeOfertas = Array.isArray(ofertas) ? ofertas.filter(Boolean) : [];
+  const total = safeOfertas.length;
 
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
@@ -43,9 +44,11 @@ export default function OffersCarousel({ ofertas }) {
     return () => clearInterval(timer);
   }, [total, isPaused]);
 
-  if (!ofertas || total === 0) return null;
+  if (!safeOfertas || total === 0) return null;
 
-  const current = ofertas[currentIndex % total];
+  const current = safeOfertas[currentIndex % total] || {};
+  const tituloProducto = current.titulo || current.nombre || "Oferta Especial";
+  const precioFinal = current.precioOferta ?? current.precio ?? 0;
 
   const prev = () => {
     setDirection(-1);
@@ -87,7 +90,6 @@ export default function OffersCarousel({ ofertas }) {
         </div>
 
         <div className="relative">
-          {/* Contenedor principal con altura fija y sin desborde */}
           <div
             className="overflow-hidden rounded-3xl bg-white border border-[#d5c3b7]/40 shadow-md h-[520px] sm:h-[490px] md:h-[390px]"
             onMouseEnter={() => setIsPaused(true)}
@@ -97,7 +99,7 @@ export default function OffersCarousel({ ofertas }) {
           >
             <AnimatePresence mode="wait" custom={direction}>
               <m.div
-                key={current.id || currentIndex}
+                key={current.id || `oferta-${currentIndex}`}
                 custom={direction}
                 variants={{
                   enter: (dir) => ({ x: dir > 0 ? 60 : -60, opacity: 0 }),
@@ -113,8 +115,8 @@ export default function OffersCarousel({ ofertas }) {
                 {/* 1. Lado Imagen */}
                 <div className="relative w-full h-[45%] md:h-full overflow-hidden bg-[#fdf9f2] shrink-0">
                   <img
-                    src={current.imagen}
-                    alt={current.titulo}
+                    src={current.imagen || FALLBACK_IMAGE}
+                    alt={tituloProducto}
                     onError={handleImageError}
                     loading="lazy"
                     decoding="async"
@@ -134,7 +136,7 @@ export default function OffersCarousel({ ofertas }) {
                       {current.valido || "Disponible hoy"}
                     </div>
                     <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[#1c1c18] mb-2 sm:mb-3 leading-snug line-clamp-2">
-                      {current.titulo}
+                      {tituloProducto}
                     </h3>
                     <p className="font-sans text-xs sm:text-sm md:text-base text-[#51443b] leading-relaxed line-clamp-3">
                       {current.descripcion}
@@ -150,11 +152,11 @@ export default function OffersCarousel({ ofertas }) {
                         </span>
                       )}
                       <span className="font-serif text-xl sm:text-2xl font-bold text-[#81542b]">
-                        Bs. {current.precioOferta}
+                        Bs. {precioFinal}
                       </span>
                     </div>
                     <a
-                      href={whatsappUrl(current.titulo)}
+                      href={whatsappUrl(tituloProducto)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-[#81542b] text-[#81542b] hover:bg-[#81542b] hover:text-white text-xs sm:text-sm font-semibold px-5 py-2.5 sm:px-6 sm:py-3 rounded-full transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
@@ -168,7 +170,7 @@ export default function OffersCarousel({ ofertas }) {
             </AnimatePresence>
           </div>
 
-          {/* Flechas de navegación para Desktop */}
+          {/* Flechas Desktop */}
           {total > 1 && (
             <>
               <button
@@ -190,11 +192,11 @@ export default function OffersCarousel({ ofertas }) {
             </>
           )}
 
-          {/* Paginación adaptable (Dots o Cápsula numérica) */}
+          {/* Paginación */}
           {total > 1 &&
             (total <= 6 ? (
               <div className="flex items-center justify-center flex-wrap gap-1 mt-5 max-w-full">
-                {ofertas.map((_, index) => (
+                {safeOfertas.map((_, index) => (
                   <button
                     key={index}
                     type="button"

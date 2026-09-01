@@ -16,11 +16,9 @@ import { fetchMenuData, getInitialMenuData } from "./services/menuService";
 
 export default function App() {
   const [currentView, setCurrentView] = useState("inicio");
-  const [selectedCategory, setSelectedCategory] = useState("Ofertas Catalina");
+  const [selectedCategory, setSelectedCategory] = useState("Cafés");
   const [highlightedItemId, setHighlightedItemId] = useState(null);
 
-  // Al cambiar de vista, vuelve al tope con scroll suave (post-render para que
-  // el smooth scroll no se cancele por el reemplazo del contenido).
   const isFirstRender = useRef(true);
   useEffect(() => {
     if (isFirstRender.current) {
@@ -31,28 +29,25 @@ export default function App() {
     return undefined;
   }, [currentView]);
 
-  // Datos iniciales síncronos desde el snapshot
   const initialData = getInitialMenuData();
   const [menuItems, setMenuItems] = useState(initialData.menu);
   const [ofertasItems, setOfertasItems] = useState(initialData.ofertas);
 
-  // Revalidación silenciosa en segundo plano al montar la app
   useEffect(() => {
     async function loadData() {
       const { menu, ofertas } = await fetchMenuData();
       if (menu && menu.length > 0) setMenuItems(menu);
-      if (ofertas && ofertas.length > 0) setOfertasItems(ofertas);
+      if (Array.isArray(ofertas)) setOfertasItems(ofertas);
     }
     loadData();
   }, []);
 
-  // Revalidación silenciosa en segundo plano al volver a la pestaña
   useEffect(() => {
     const handleVisibilityChange = async () => {
       if (document.visibilityState === "visible") {
         const { menu, ofertas } = await fetchMenuData();
         if (menu && menu.length > 0) setMenuItems(menu);
-        if (ofertas && ofertas.length > 0) setOfertasItems(ofertas);
+        if (Array.isArray(ofertas)) setOfertasItems(ofertas);
       }
     };
 
@@ -61,7 +56,6 @@ export default function App() {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
-  // Aparición progresiva de secciones con IntersectionObserver
   useEffect(() => {
     const revealEls = document.querySelectorAll(
       "[data-reveal]:not(.is-visible)",
@@ -90,8 +84,6 @@ export default function App() {
     setHighlightedItemId(item.id);
   };
 
-  // Espera a que el grid re-asiente tras el cambio de categoría (~0.4s) antes
-  // de hacer scrollIntoView, y limpia el highlight después de unos segundos.
   useEffect(() => {
     if (!highlightedItemId) return undefined;
 
@@ -130,7 +122,9 @@ export default function App() {
             <>
               <Hero onExploreMenu={() => setCurrentView("menu")} />
               <MarqueeBanner />
-              <OffersCarousel ofertas={ofertasItems} />
+              {ofertasItems && ofertasItems.length > 0 && (
+                <OffersCarousel ofertas={ofertasItems} />
+              )}
               <AboutSection />
               <ProcessTimeline />
               <div className="divider-warm max-w-6xl mx-auto px-6 my-2" />

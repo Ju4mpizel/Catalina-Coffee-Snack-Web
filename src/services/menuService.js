@@ -1,11 +1,8 @@
 import { mockMenu, mockOfertas } from "../data/mockMenu";
 import menuSnapshot from "../data/menuSnapshot.json";
 
-// Lee la ID exclusivamente desde la variable de entorno de Vite (.env)
 const SHEET_ID = import.meta.env.VITE_SHEETS_MENU_ID;
 
-// Retorna los datos síncronos generados en build time.
-// Garantiza que la app arranque con el menú completo pintado en 0ms.
 export function getInitialMenuData() {
   const hasSnapshotMenu = menuSnapshot?.menu?.length > 0;
   return {
@@ -15,7 +12,6 @@ export function getInitialMenuData() {
   };
 }
 
-// Helper para convertir valores de Sheets en booleanos tolerantes a errores humanos
 const parseBoolean = (val) => {
   if (val === undefined || val === null) return false;
   if (typeof val === "boolean") return val;
@@ -24,15 +20,14 @@ const parseBoolean = (val) => {
   return ["VERDADERO", "VERDAD", "SÍ", "SI", "YES", "TRUE", "1"].includes(str);
 };
 
-// Helper para limpiar precios (distingue comas de miles vs comas decimales)
 const parseNumber = (val) => {
   if (val === undefined || val === null || val === "") return 0;
   if (typeof val === "number") return val;
   const cleaned = val
     .toString()
     .trim()
-    .replace(/,(?=\d{3}(?:\D|$))/g, "") // Remueve comas que actúan como separador de miles
-    .replace(",", "."); // Convierte comas decimales a punto
+    .replace(/,(?=\d{3}(?:\D|$))/g, "")
+    .replace(",", ".");
   const num = Number(cleaned);
   return isNaN(num) ? 0 : num;
 };
@@ -63,47 +58,63 @@ export async function fetchMenuData() {
       .filter((row) => row && row.c && row.c[1] && row.c[1].v)
       .map((row, index) => {
         const c = row.c;
-        const precio = parseNumber(c[3]?.v);
-        const precioAntesVal =
-          c[4]?.v !== undefined && c[4]?.v !== null && c[4]?.v !== ""
-            ? parseNumber(c[4]?.v)
-            : null;
 
-        const esDestacado = parseBoolean(c[7]?.v);
+        const id = c[0]?.v?.toString() || String(index + 1);
+        const nombre = String(c[1]?.v || "").trim();
+        const categoria = c[2]?.v?.toString().trim() || "Cafés";
+        const precio = parseNumber(c[3]?.v);
+        const descripcion = String(c[4]?.v || "").trim();
+        const imagen =
+          c[5]?.v ||
+          "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600&q=75&auto=format";
+
+        const esDestacado = parseBoolean(c[6]?.v);
+        const formatoPinterest =
+          c[7]?.v?.toString().toLowerCase().trim() || "cuadrado";
+        const disponible = c[8]?.v !== undefined ? parseBoolean(c[8]?.v) : true;
+        const esOferta = parseBoolean(c[9]?.v);
+        const descuento = String(c[10]?.v || "").trim();
+        const precioAntesVal =
+          c[11]?.v !== undefined && c[11]?.v !== null && c[11]?.v !== ""
+            ? parseNumber(c[11]?.v)
+            : null;
+        const valido = String(c[12]?.v || "Disponible hoy").trim();
 
         return {
-          id: c[0]?.v?.toString() || String(index + 1),
-          nombre: c[1]?.v || "",
-          categoria: c[2]?.v?.toString().trim() || "General",
-          precio: precio,
+          id,
+          nombre,
+          categoria,
+          precio,
           precioAntes: precioAntesVal,
-          descripcion: c[5]?.v || "",
-          imagen:
-            c[6]?.v ||
-            "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600&q=75&auto=format",
+          descripcion,
+          imagen,
           destacadoPinterest: esDestacado ? "SÍ" : "NO",
           destacado: esDestacado,
-          formatoPinterest:
-            c[8]?.v?.toString().toLowerCase().trim() || "cuadrado",
-          esOferta: parseBoolean(c[9]?.v),
+          formatoPinterest,
+          disponible,
+          esOferta,
+          descuento,
+          valido,
         };
       });
 
     const parsedOfertas = parsedMenu.reduce((acc, item) => {
       if (
         item.esOferta ||
-        item.categoria.toLowerCase() === "ofertas catalina"
+        item.categoria.toLowerCase() === "ofertas catalina" ||
+        item.categoria.toLowerCase() === "promos"
       ) {
         acc.push({
           id: item.id,
           titulo: item.nombre,
-          descuento: "Oferta",
+          nombre: item.nombre,
+          descuento: item.descuento || "Oferta Especial",
           descripcion: item.descripcion,
-          precioAntes:
-            item.precioAntes ?? (item.precio > 0 ? item.precio + 10 : null),
+          precioAntes: item.precioAntes,
           precioOferta: item.precio,
+          precio: item.precio,
           imagen: item.imagen,
-          valido: "Disponible Hoy",
+          valido: item.valido,
         });
       }
       return acc;
@@ -111,8 +122,7 @@ export async function fetchMenuData() {
 
     return {
       menu: parsedMenu.length > 0 ? parsedMenu : getInitialMenuData().menu,
-      ofertas:
-        parsedOfertas.length > 0 ? parsedOfertas : getInitialMenuData().ofertas,
+      ofertas: parsedOfertas,
     };
   } catch (error) {
     console.error(

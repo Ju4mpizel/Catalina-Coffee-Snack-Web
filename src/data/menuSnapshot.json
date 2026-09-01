@@ -950,7 +950,7 @@
       "esOferta": false
     },
     {
-      "id": "item-74",
+      "id": "75",
       "nombre": "Combo Tarde Catalina",
       "categoria": "Snacks",
       "precio": 46,
@@ -960,8 +960,19 @@
       "destacadoPinterest": "NO",
       "destacado": false,
       "formatoPinterest": "sí",
-      "esOferta": false
+      "esOferta": true
     }
   ],
-  "ofertas": []
+  "ofertas": [
+    {
+      "id": "75",
+      "titulo": "Combo Tarde Catalina",
+      "descuento": "Oferta",
+      "descripcion": "",
+      "precioAntes": 56,
+      "precioOferta": 46,
+      "imagen": "NO",
+      "valido": "Disponible Hoy"
+    }
+  ]
 }
